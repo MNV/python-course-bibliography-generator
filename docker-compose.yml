@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        image: bibliography/generator
+        env_file:
+            - .env
+        volumes:
+            - ./src:/src
+            - ./media:/media
+            - ./logs:/logs
+            - ./docs:/docs
+        working_dir: /src/
+        tty: true
+        stdin_open: true
+        command: python main.py
