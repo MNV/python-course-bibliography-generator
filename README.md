@@ -14,6 +14,14 @@ Clone the repository to your computer:
 git clone https://github.com/mnv/python-course-bibliography-generator.git
 ```
 
+### Requirements:
+
+Install the appropriate software:
+
+1. [Docker Desktop](https://www.docker.com).
+2. [Git](https://github.com/git-guides/install-git).
+3. [PyCharm](https://www.jetbrains.com/ru-ru/pycharm/download) (optional).
+
 ## Usage
 
 1. Copy the given template file into the input Excel file that will allow you
