@@ -69,21 +69,21 @@
 3. Соберите Docker-контейнер с помощью Docker Compose:
     .. code-block:: console
 
-        docker-compose build
+        docker compose build
 
     Данную команду необходимо выполнять повторно в случае обновления зависимостей в файле `requirements.txt`.
 
 4. Чтобы просмотреть документацию по использованию консольного приложения, выполните:
     .. code-block:: console
 
-        docker-compose run app python main.py --help
+        docker compose run app python main.py --help
 
     Данная команда выведет на экран список доступных аргументов и их значения по умолчанию.
 
 5. Для запуска приложения выполните:
     .. code-block:: console
 
-        docker-compose run app python main.py
+        docker compose run app python main.py
 
     Запустится программа. Она считает исходный файл `media/input.xlsx`, выполнит обработку данных и сгенерирует выходной файл – `media/output.docx`.
     Откройте этот файл и проверьте результат работы приложения.
@@ -93,7 +93,7 @@
        Для настройки параметров запуска следует передать консольной команде аргументы в соответствии с её документацией:
         .. code-block:: console
 
-            docker-compose run app python main.py --citation gost --path_input /media/input.xlsx --path_output /media/output.xlsx
+            docker compose run app python main.py --citation gost --path_input /media/input.xlsx --path_output /media/output.xlsx
 
         Таким образом можно определять стиль цитирования и пути ко входному и выходному файлам.
 
@@ -118,7 +118,7 @@
 
 .. code-block:: console
 
-    docker-compose run app pytest --cov=/src --cov-report html:htmlcov --cov-report term --cov-config=/src/tests/.coveragerc -vv
+    docker compose run app pytest --cov=/src --cov-report html:htmlcov --cov-report term --cov-config=/src/tests/.coveragerc -vv
 
 Также существует аналогичная `make`-команда:
 
