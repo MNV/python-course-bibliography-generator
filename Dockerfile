@@ -21,8 +21,8 @@ COPY ./requirements.txt ./setup.cfg ./black.toml ./.pylintrc /
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install --upgrade pip -r /requirements.txt
 
-COPY ./src ./docs /
-
+ADD ./src /src
+ADD ./docs /docs
 WORKDIR /src
 
 # root is used as a hotfix for package introspection problem

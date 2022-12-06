@@ -3,7 +3,7 @@ services:
         build:
             context: .
             dockerfile: ./Dockerfile
-        image: bibliography/generator
+        image: bibliography-generator
         env_file:
             - .env
         volumes:
