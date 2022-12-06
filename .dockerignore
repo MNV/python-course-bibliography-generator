@@ -3,3 +3,7 @@ logs
 Makefile
 !.gitignore
 !.dockerignore
+
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+**/*.py[cod]
