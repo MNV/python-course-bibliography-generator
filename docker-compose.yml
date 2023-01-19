@@ -12,6 +12,3 @@ services:
             - ./logs:/logs
             - ./docs:/docs
         working_dir: /src/
-        tty: true
-        stdin_open: true
-        command: python main.py
