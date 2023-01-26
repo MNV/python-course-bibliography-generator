@@ -10,6 +10,7 @@ from logger import get_logger
 from readers.reader import SourcesReader
 from renderer import Renderer
 from settings import INPUT_FILE_PATH, OUTPUT_FILE_PATH
+from formatters.styles.apa import APACitationFormatter
 
 logger = get_logger(__name__)
 
@@ -75,16 +76,24 @@ def process_input(
         path_input,
         path_output,
     )
-
     models = SourcesReader(path_input).read()
-    formatted_models = tuple(
-        str(item) for item in GOSTCitationFormatter(models).format()
-    )
+    match citation:
+        case CitationEnum.GOST.name:
+            formatted_models = tuple(
+                str(item) for item in GOSTCitationFormatter(models).format()
+            )
+            logger.info("Генерация выходного файла GOST ...")
+            Renderer(formatted_models).render(path_output)
+            logger.info("Команда успешно завершена.")
+        case CitationEnum.APA.name:
+            formatted_models = tuple(
+                str(item) for item in APACitationFormatter(models).format()
+            )
+            Renderer(formatted_models).render(path_output)
+            logger.info("Генерация выходного файла APA ...")
+            Renderer(formatted_models).render(path_output)
+            logger.info("Команда успешно завершена.")
 
-    logger.info("Генерация выходного файла ...")
-    Renderer(formatted_models).render(path_output)
-
-    logger.info("Команда успешно завершена.")
 
 
 if __name__ == "__main__":

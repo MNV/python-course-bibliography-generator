@@ -7,9 +7,10 @@ from typing import Type
 import openpyxl
 from openpyxl.workbook import Workbook
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
+from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, DissertationModel, JournalArticleModel
 from logger import get_logger
 from readers.base import BaseReader
+
 
 
 logger = get_logger(__name__)
@@ -88,6 +89,54 @@ class ArticlesCollectionReader(BaseReader):
             "year": {5: int},
             "pages": {6: str},
         }
+class DissertationReader(BaseReader):
+    """
+    Чтение модели сборника статей.
+    """
+
+    @property
+    def model(self) -> Type[DissertationModel]:
+        return DissertationModel
+
+    @property
+    def sheet(self) -> str:
+        return "Диссертация"
+
+    @property
+    def attributes(self) -> dict:
+        return {
+            "authors": {0: str},
+            "desertation_title": {1: str},
+            "canddoc": {2: str},
+            "sience": {3: str},
+            "code": {4: str},
+            "city": {5: str},
+            "year": {6: int},
+            "pages": {7: int},
+        }
+class JournalArticleReader(BaseReader):
+    """
+    Чтение модели сборника статей.
+    """
+
+    @property
+    def model(self) -> Type[JournalArticleModel]:
+        return JournalArticleModel
+
+    @property
+    def sheet(self) -> str:
+        return "Статья из журнала"
+
+    @property
+    def attributes(self) -> dict:
+        return {
+            "authors": {0: str},
+            "article_title": {1: str},
+            "journal_title": {2: str},
+            "year": {3: int},
+            "journal_number": {4: int},
+            "pages": {5: str},
+        }
 
 
 class SourcesReader:
@@ -100,6 +149,8 @@ class SourcesReader:
         BookReader,
         InternetResourceReader,
         ArticlesCollectionReader,
+        JournalArticleReader,
+        DissertationReader,
     ]
 
     def __init__(self, path: str) -> None:

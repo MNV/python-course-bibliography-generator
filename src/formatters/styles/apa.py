@@ -1,5 +1,5 @@
 """
-Стиль цитирования по ГОСТ Р 7.0.5-2008.
+Стиль цитирования по APA 7th.
 """
 from string import Template
 
@@ -13,7 +13,7 @@ from logger import get_logger
 logger = get_logger(__name__)
 
 
-class GOSTBook(BaseCitationStyle):
+class APABook(BaseCitationStyle):
     """
     Форматирование для книг.
     """
@@ -23,7 +23,7 @@ class GOSTBook(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$authors $title. – $edition$city: $publishing_house, $year. – $pages с."
+            "$authors ($year). $title. $publishing_house."
         )
 
     def substitute(self) -> str:
@@ -33,11 +33,8 @@ class GOSTBook(BaseCitationStyle):
         return self.template.substitute(
             authors=self.data.authors,
             title=self.data.title,
-            edition=self.get_edition(),
-            city=self.data.city,
             publishing_house=self.data.publishing_house,
             year=self.data.year,
-            pages=self.data.pages,
         )
 
     def get_edition(self) -> str:
@@ -50,7 +47,7 @@ class GOSTBook(BaseCitationStyle):
         return f"{self.data.edition} изд. – " if self.data.edition else ""
 
 
-class GOSTInternetResource(BaseCitationStyle):
+class APAInternetResource(BaseCitationStyle):
     """
     Форматирование для интернет-ресурсов.
     """
@@ -60,7 +57,7 @@ class GOSTInternetResource(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$article // $website URL: $link (дата обращения: $access_date)."
+            "$article (n.d.) $website $link"
         )
 
     def substitute(self) -> str:
@@ -71,11 +68,10 @@ class GOSTInternetResource(BaseCitationStyle):
             article=self.data.article,
             website=self.data.website,
             link=self.data.link,
-            access_date=self.data.access_date,
         )
 
 
-class GOSTCollectionArticle(BaseCitationStyle):
+class APACollectionArticle(BaseCitationStyle):
     """
     Форматирование для статьи из сборника.
     """
@@ -85,7 +81,7 @@ class GOSTCollectionArticle(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$authors $article_title // $collection_title. – $city: $publishing_house, $year. – С. $pages."
+            "$authors ($year). $article_title. $collection_title, $pages."
         )
 
     def substitute(self) -> str:
@@ -101,7 +97,7 @@ class GOSTCollectionArticle(BaseCitationStyle):
             year=self.data.year,
             pages=self.data.pages,
         )
-class GOSTJournalArticle(BaseCitationStyle):
+class APAJournalArticle(BaseCitationStyle):
     """
     Форматирование для статьи из журнала.
     """
@@ -111,7 +107,7 @@ class GOSTJournalArticle(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$authors $article_title // $journal_title – $year. - №$journal_number, $pages."
+            "$authors ($year). $article_title. $journal_title, $journal_number, $pages."
         )
 
     def substitute(self) -> str:
@@ -126,7 +122,7 @@ class GOSTJournalArticle(BaseCitationStyle):
             journal_number = self.data.journal_number,
             pages=self.data.pages,
         )
-class GOSTDissertation(BaseCitationStyle):
+class APADissertation(BaseCitationStyle):
     """
     Форматирование для статьи из сборника.
     """
@@ -136,7 +132,7 @@ class GOSTDissertation(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$authors, $desertation_title [Текст]: дис. ... $canddoc $sience наук: $code / $authors - $city, $year. - $pages с."
+            "$authors ($year). $desertation_title [$canddoc диссиртация]"
         )
 
     def substitute(self) -> str:
@@ -153,17 +149,17 @@ class GOSTDissertation(BaseCitationStyle):
             year=self.data.year,
             pages=self.data.pages,
         )
-class GOSTCitationFormatter:
+class APACitationFormatter:
     """
     Базовый класс для итогового форматирования списка источников.
     """
 
     formatters_map = {
-        BookModel.__name__: GOSTBook,
-        InternetResourceModel.__name__: GOSTInternetResource,
-        ArticlesCollectionModel.__name__: GOSTCollectionArticle,
-        DissertationModel.__name__: GOSTDissertation,
-        JournalArticleModel.__name__: GOSTJournalArticle,
+        BookModel.__name__: APABook,
+        InternetResourceModel.__name__: APAInternetResource,
+        ArticlesCollectionModel.__name__: APACollectionArticle,
+        DissertationModel.__name__: APADissertation,
+        JournalArticleModel.__name__: APAJournalArticle,
     }
 
     def __init__(self, models: list[BaseModel]) -> None:
