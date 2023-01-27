@@ -90,7 +90,7 @@ class TestGOST:
 
         assert (
             model.formatted
-            == "Иванов И.М., Наука как искусство [Текст]: дис. ... канд. экон. наук: 01.01.01 / Иванов И.М. - СПб., 2020. - 199 с"
+            == "Иванов И.М., Наука как искусство [Текст]: дис. ... канд. экон. наук: 01.01.01 / Иванов И.М. - СПб., 2020. - 199 с."
         )
     def test_citation_formatter(
         self,
@@ -120,8 +120,8 @@ class TestGOST:
         result = BaseCitationFormatter(models).format()
 
         # тестирование сортировки списка источников
-        assert result[0] == models[3]
-        assert result[1] == models[4]
+        assert result[0] == models[4]
+        assert result[1] == models[3]
         assert result[2] == models[2]
-        assert result[3] == models[1]
-        assert result[4] == models[0]
+        assert result[3] == models[0]
+        assert result[4] == models[1]

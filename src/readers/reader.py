@@ -91,7 +91,7 @@ class ArticlesCollectionReader(BaseReader):
         }
 class DissertationReader(BaseReader):
     """
-    Чтение модели сборника статей.
+    Чтение модели диссертаций.
     """
 
     @property
@@ -116,7 +116,7 @@ class DissertationReader(BaseReader):
         }
 class JournalArticleReader(BaseReader):
     """
-    Чтение модели сборника статей.
+    Чтение модели статей из журнала.
     """
 
     @property

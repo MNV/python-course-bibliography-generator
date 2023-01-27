@@ -119,17 +119,19 @@ class TestReaders:
         model = models[0]
 
         model_type = DissertationModel
-
         assert isinstance(model, model_type)
-        assert model.authors == "Иванов И.М., Петров С.Н."
-        assert model.article_title == "Наука как искусство"
-        assert model.journal_title == "Образование и наука"
+        assert model.authors == "Иванов И.М."
+        assert model.desertation_title == "Наука как искусство"
+        assert model.canddoc == "д-р. / канд."
+        assert model.sience == "экон."
+        assert model.code == "01.01.01"
+        assert model.city == "СПб."
         assert model.year == 2020
-        assert model.city == 10
-        assert model.pages == "25-30"
+        assert model.pages == 199
+
 
         # проверка общего количества атрибутов
-        assert len(model_type.schema().get("properties", {}).keys()) == 6
+        assert len(model_type.schema().get("properties", {}).keys()) == 8
     def test_journal_article(self, workbook: Any) -> None:
         """
         Тестирование чтения сборника статей.
@@ -145,17 +147,15 @@ class TestReaders:
         model_type = JournalArticleModel
 
         assert isinstance(model, model_type)
-        assert model.authors == "Иванов И.М."
-        assert model.desertation_title == "Наука как искусство"
-        assert model.canddoc == "д-р. / канд."
-        assert model.sience == "экон."
-        assert model.code == "01.01.01"
-        assert model.city == "СПб."
+        assert model.authors == "Иванов И.М., Петров С.Н."
+        assert model.article_title == "Наука как искусство"
+        assert model.journal_title == "Образование и наука"
         assert model.year == 2020
-        assert model.pages == 199
+        assert model.journal_number == 10
+        assert model.pages == "25-30"
 
         # проверка общего количества атрибутов
-        assert len(model_type.schema().get("properties", {}).keys()) == 8
+        assert len(model_type.schema().get("properties", {}).keys()) == 6
     def test_sources_reader(self) -> None:
         """
         Тестирование функции чтения всех моделей из источника.
@@ -163,12 +163,14 @@ class TestReaders:
 
         models = SourcesReader(TEMPLATE_FILE_PATH).read()
         # проверка общего считанного количества моделей
-        assert len(models) == 8
+        assert len(models) == 10
 
         # проверка наличия всех ожидаемых типов моделей среди типов считанных моделей
         model_types = {model.__class__.__name__ for model in models}
         assert model_types == {
             BookModel.__name__,
             InternetResourceModel.__name__,
+            DissertationModel.__name__,
             ArticlesCollectionModel.__name__,
+            JournalArticleModel.__name__
         }

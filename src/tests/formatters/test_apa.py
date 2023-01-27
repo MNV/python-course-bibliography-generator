@@ -119,8 +119,8 @@ class TestGOST:
         result = BaseCitationFormatter(models).format()
 
         # тестирование сортировки списка источников
-        assert result[0] == models[3]
-        assert result[1] == models[4]
-        assert result[2] == models[2]
-        assert result[3] == models[1]
-        assert result[4] == models[0]
+        assert result[0] == models[4]
+        assert result[1] == models[3]
+        assert result[2] == models[0]
+        assert result[3] == models[2]
+        assert result[4] == models[1]

@@ -114,9 +114,9 @@ class JournalArticleModel(BaseModel):
             MagazineArticleModel(
                 authors="Иванов И.М., Петров С.Н.",
                 article_title="Наука как искусство",
-                magazine_title="Научный журнал",
+                journal_title="Научный журнал",
                 year=2020,
-                magazine_number=1,
+                journal_number=1,
                 pages="25-30",
             )
     """

@@ -63,15 +63,15 @@ def journal_articles_model_fixture() -> JournalArticleModel:
     """
     Фикстура модели сборника статей.
 
-    :return: ArticlesCollectionModel
+    :return: JournalArticlesnModel
     """
 
     return JournalArticleModel(
         authors="Иванов И.М., Петров С.Н.",
         article_title="Наука как искусство",
-        magazine_title = "Образование и наука",
+        journal_title = "Образование и наука",
         year = 2020,
-        magazine_number = 10,
+        journal_number = 10,
         pages = "25-30",
     )
 @pytest.fixture
@@ -79,7 +79,7 @@ def disseratation_model_fixture() -> DissertationModel:
     """
     Фикстура модели сборника статей.
 
-    :return: ArticlesCollectionModel
+    :return: DissertationModel
     """
 
     return DissertationModel(
