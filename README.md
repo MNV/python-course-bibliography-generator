@@ -6,6 +6,7 @@ The application allows you to automate the process of generating a bibliography 
 
 Supported citation styles:
 - ГОСТ Р 7.0.5-2008 
+- American Psychological Association
 
 ## Installation
 
@@ -25,7 +26,7 @@ Install the appropriate software:
 ## Usage
 
 1. Copy the given template file into the input Excel file that will allow you
-to fill it without changing the original template:
+   to fill it without changing the original template:
     ```shell
     cp media/template.xlsx media/input.xlsx
     ```
@@ -54,7 +55,7 @@ to fill it without changing the original template:
 5. Now it is possible to run the command inside the Docker container 
     as usual, passing needed arguments to the console application:
     ```shell
-    docker compose run app python main.py --citation gost --path_input /media/input.xlsx --path_output /media/output.xlsx
+    docker compose run app python main.py --citation gost --path_input /media/input.xlsx --path_output /media/output.docx
     ```
    
    Also, it is possible to omit the arguments to use their defaults:
