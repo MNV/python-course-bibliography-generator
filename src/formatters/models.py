@@ -4,6 +4,7 @@
 
 from typing import Optional
 
+
 from pydantic import BaseModel, Field
 
 
@@ -76,5 +77,59 @@ class ArticlesCollectionModel(BaseModel):
     collection_title: str
     city: str
     publishing_house: str
+    year: int = Field(..., gt=0)
+    pages: str
+
+
+class MagazineReaderModel(BaseModel):
+
+    """
+    Модель сборника статей из журнала:
+
+    .. code-block::
+
+        MagazineReaderModel(
+            authors="Иванов И.М., Петров С.Н.",
+            article_title="Наука как искусство",
+            magazine_title="Образование и наука",
+            year=2020,
+            number=10,
+            pages="25-30",
+        )
+    """
+
+    authors: str
+    article_title: str
+    magazine_title: str
+    year: int = Field(..., gt=0)
+    number: int = Field(..., gt=0)
+    pages: str
+
+
+class DissertationReaderModel(BaseModel):
+
+    """
+    Модель диссертаций:
+
+    .. code-block::
+
+        MagazineReaderModel(
+            authors="Иванов И.М., Петров С.Н.",
+            article_title="Наука как искусство",
+            academic_degree="д-р",
+            branch="экон.",
+            code="01.01.01",
+            city="СПб.",
+            year=2020,
+            pages="199",
+        )
+    """
+
+    authors: str
+    article_title: str
+    academic_degree: str
+    branch: str
+    code: str
+    city: str
     year: int = Field(..., gt=0)
     pages: str

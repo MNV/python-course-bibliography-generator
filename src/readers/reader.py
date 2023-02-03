@@ -7,10 +7,11 @@ from typing import Type
 import openpyxl
 from openpyxl.workbook import Workbook
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
-from logger import get_logger
-from readers.base import BaseReader
+from src.logger import get_logger
+from src.readers.base import BaseReader
 
+from src.formatters.models import MagazineReaderModel, BookModel, InternetResourceModel, ArticlesCollectionModel, \
+    DissertationReaderModel
 
 logger = get_logger(__name__)
 
@@ -90,6 +91,58 @@ class ArticlesCollectionReader(BaseReader):
         }
 
 
+class MagazineReader(BaseReader):
+    """
+    Чтение модели статья из журнала.
+    """
+
+    @property
+    def model(self) -> Type[MagazineReaderModel]:
+        return MagazineReaderModel
+
+    @property
+    def sheet(self) -> str:
+        return "Статья из журнала"
+
+    @property
+    def attributes(self) -> dict:
+        return {
+            "authors": {0: str},
+            "article_title": {1: str},
+            "magazine_title": {2: str},
+            "year": {3: int},
+            "number": {4: int},
+            "pages": {5: str},
+        }
+
+
+class DissertationReader(BaseReader):
+    """
+    Чтение модели статья из журнала.
+    """
+
+    @property
+    def model(self) -> Type[DissertationReaderModel]:
+        return DissertationReaderModel
+
+    @property
+    def sheet(self) -> str:
+        return "Диссертация"
+
+    @property
+    def attributes(self) -> dict:
+        return {
+            "authors": {0: str},
+            "article_title": {1: str},
+            "academic_degree": {2: str},
+            "branch": {3: str},
+            "code": {4: str},
+            "city": {5: str},
+            "year": {6: int},
+            "pages": {7: str},
+        }
+
+
 class SourcesReader:
     """
     Чтение из источника данных.
@@ -100,6 +153,8 @@ class SourcesReader:
         BookReader,
         InternetResourceReader,
         ArticlesCollectionReader,
+        MagazineReader,
+        DissertationReader,
     ]
 
     def __init__(self, path: str) -> None:

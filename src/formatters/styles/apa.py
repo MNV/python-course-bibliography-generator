@@ -14,7 +14,7 @@ from src.logger import get_logger
 logger = get_logger(__name__)
 
 
-class GOSTBook(BaseCitationStyle):
+class APABook(BaseCitationStyle):
     """
     Форматирование для книг.
     """
@@ -24,34 +24,29 @@ class GOSTBook(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$authors $title. – $edition$city: $publishing_house, $year. – $pages с."
+            "$authors ($year). $title. $publishing_house."
         )
 
     def substitute(self) -> str:
-
         logger.info('Форматирование книги "%s" ...', self.data.title)
 
         return self.template.substitute(
             authors=self.data.authors,
             title=self.data.title,
-            edition=self.get_edition(),
-            city=self.data.city,
             publishing_house=self.data.publishing_house,
             year=self.data.year,
-            pages=self.data.pages,
         )
 
     def get_edition(self) -> str:
         """
         Получение отформатированной информации об издательстве.
-
         :return: Информация об издательстве.
         """
 
         return f"{self.data.edition} изд. – " if self.data.edition else ""
 
 
-class GOSTInternetResource(BaseCitationStyle):
+class APAInternetResource(BaseCitationStyle):
     """
     Форматирование для интернет-ресурсов.
     """
@@ -61,7 +56,7 @@ class GOSTInternetResource(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$article // $website URL: $link (дата обращения: $access_date)."
+            "$article ($access_date) $website $link"
         )
 
     def substitute(self) -> str:
@@ -76,7 +71,7 @@ class GOSTInternetResource(BaseCitationStyle):
         )
 
 
-class GOSTCollectionArticle(BaseCitationStyle):
+class APACollectionArticle(BaseCitationStyle):
     """
     Форматирование для статьи из сборника.
     """
@@ -86,7 +81,7 @@ class GOSTCollectionArticle(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$authors $article_title // $collection_title. – $city: $publishing_house, $year. – С. $pages."
+            "$authors ($year) $article_title, $collection_title $city: $publishing_house, $pages p."
         )
 
     def substitute(self) -> str:
@@ -104,7 +99,7 @@ class GOSTCollectionArticle(BaseCitationStyle):
         )
 
 
-class GOSTMagazineReader(BaseCitationStyle):
+class APAMagazineReader(BaseCitationStyle):
     """
     Форматирование для статьи из сборника.
     """
@@ -114,7 +109,7 @@ class GOSTMagazineReader(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$authors $article_title // $magazine_title. – $year. – №$number. – С. $pages."
+            "$authors ($year) $article_title. $magazine_title, $number $pages p."
         )
 
     def substitute(self) -> str:
@@ -131,7 +126,7 @@ class GOSTMagazineReader(BaseCitationStyle):
         )
 
 
-class GOSTDissertationReader(BaseCitationStyle):
+class APADissertationReader(BaseCitationStyle):
     """
     Форматирование для статьи из сборника.
     """
@@ -141,7 +136,7 @@ class GOSTDissertationReader(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$authors $article_title: $academic_degree $branch наук: $code. – $city, $year. – $pages с."
+              "$authors ($year) $article_title, дис. [$branch: $code] $city, $pages p."
         )
 
     def substitute(self) -> str:
@@ -160,17 +155,17 @@ class GOSTDissertationReader(BaseCitationStyle):
         )
 
 
-class GOSTCitationFormatter:
+class APACitationFormatter:
     """
     Базовый класс для итогового форматирования списка источников.
     """
 
     formatters_map = {
-        BookModel.__name__: GOSTBook,
-        InternetResourceModel.__name__: GOSTInternetResource,
-        ArticlesCollectionModel.__name__: GOSTCollectionArticle,
-        DissertationReaderModel.__name__: GOSTDissertationReader,
-        MagazineReaderModel.__name__: GOSTMagazineReader,
+        BookModel.__name__: APABook,
+        InternetResourceModel.__name__: APAInternetResource,
+        ArticlesCollectionModel.__name__: APACollectionArticle,
+        DissertationReaderModel.__name__: APADissertationReader,
+        MagazineReaderModel.__name__: APAMagazineReader,
     }
 
     def __init__(self, models: list[BaseModel]) -> None:
