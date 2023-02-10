@@ -93,7 +93,7 @@
        Для настройки параметров запуска следует передать консольной команде аргументы в соответствии с её документацией:
         .. code-block:: console
 
-            docker compose run app python main.py --citation gost --path_input /media/input.xlsx --path_output /media/output.xlsx
+            docker compose run app python main.py --citation gost --path_input /media/input.xlsx --path_output /media/output.docx
 
         Таким образом можно определять стиль цитирования и пути ко входному и выходному файлам.
 

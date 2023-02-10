@@ -54,7 +54,7 @@ to fill it without changing the original template:
 5. Now it is possible to run the command inside the Docker container 
     as usual, passing needed arguments to the console application:
     ```shell
-    docker compose run app python main.py --citation gost --path_input /media/input.xlsx --path_output /media/output.xlsx
+    docker compose run app python main.py --citation gost --path_input /media/input.xlsx --path_output /media/output.docx
     ```
    
    Also, it is possible to omit the arguments to use their defaults:
