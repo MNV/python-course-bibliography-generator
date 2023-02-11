@@ -3,8 +3,20 @@
 """
 
 from formatters.base import BaseCitationFormatter
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, AbstractModel, RegulationModel
-from formatters.styles.gost import GOSTBook, GOSTInternetResource, GOSTCollectionArticle, GOSTAbtract, GOSTRegulation
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    AbstractModel,
+    RegulationModel,
+)
+from formatters.styles.gost import (
+    GOSTBook,
+    GOSTInternetResource,
+    GOSTCollectionArticle,
+    GOSTAbtract,
+    GOSTRegulation,
+)
 
 
 class TestGOST:
@@ -23,12 +35,12 @@ class TestGOST:
         model = GOSTBook(book_model_fixture)
 
         assert (
-                model.formatted
-                == "Иванов И.М., Петров С.Н. Наука как искусство. – 3-е изд. – СПб.: Просвещение, 2020. – 999 с."
+            model.formatted
+            == "Иванов И.М., Петров С.Н. Наука как искусство. – 3-е изд. – СПб.: Просвещение, 2020. – 999 с."
         )
 
     def test_internet_resource(
-            self, internet_resource_model_fixture: InternetResourceModel
+        self, internet_resource_model_fixture: InternetResourceModel
     ) -> None:
         """
         Тестирование форматирования интернет-ресурса.
@@ -40,12 +52,12 @@ class TestGOST:
         model = GOSTInternetResource(internet_resource_model_fixture)
 
         assert (
-                model.formatted
-                == "Наука как искусство // Ведомости URL: https://www.vedomosti.ru (дата обращения: 01.01.2021)."
+            model.formatted
+            == "Наука как искусство // Ведомости URL: https://www.vedomosti.ru (дата обращения: 01.01.2021)."
         )
 
     def test_articles_collection(
-            self, articles_collection_model_fixture: ArticlesCollectionModel
+        self, articles_collection_model_fixture: ArticlesCollectionModel
     ) -> None:
         """
         Тестирование форматирования сборника статей.
@@ -57,13 +69,11 @@ class TestGOST:
         model = GOSTCollectionArticle(articles_collection_model_fixture)
 
         assert (
-                model.formatted
-                == "Иванов И.М., Петров С.Н. Наука как искусство // Сборник научных трудов. – СПб.: АСТ, 2020. – С. 25-30."
+            model.formatted
+            == "Иванов И.М., Петров С.Н. Наука как искусство // Сборник научных трудов. – СПб.: АСТ, 2020. – С. 25-30."
         )
 
-    def test_abstract(
-            self, abstract_model_fixture: AbstractModel
-    ) -> None:
+    def test_abstract(self, abstract_model_fixture: AbstractModel) -> None:
         """
         Тестирование форматирования автореферата.
 
@@ -74,14 +84,12 @@ class TestGOST:
         model = GOSTAbtract(abstract_model_fixture)
 
         assert (
-                model.formatted
-                == "Иванов И.М. Наука как искусство: автореф. дис. ... д-р. / канд. экон. наук: 01.01.01. Спб., "
-                   "2020. 199 с."
+            model.formatted
+            == "Иванов И.М. Наука как искусство: автореф. дис. ... д-р. / канд. экон. наук: 01.01.01. Спб., "
+            "2020. 199 с."
         )
 
-    def test_regulation(
-            self, regulation_model_fixture: RegulationModel
-    ) -> None:
+    def test_regulation(self, regulation_model_fixture: RegulationModel) -> None:
         """
         Тестирование форматирования нормативного акта.
 
@@ -92,18 +100,18 @@ class TestGOST:
         model = GOSTRegulation(regulation_model_fixture)
 
         assert (
-                model.formatted
-                == "Конституция Российской Федерации \"Наука как искусство\" от 1/1/2000 № 1234-56 // Парламентская "
-                   "газета. 2020 г. № 5. Ст. 15 с изм. и допол. в ред. от 9/11/2002"
+            model.formatted
+            == 'Конституция Российской Федерации "Наука как искусство" от 1/1/2000 № 1234-56 // Парламентская '
+            "газета. 2020 г. № 5. Ст. 15 с изм. и допол. в ред. от 9/11/2002"
         )
 
     def test_citation_formatter(
-            self,
-            book_model_fixture: BookModel,
-            internet_resource_model_fixture: InternetResourceModel,
-            articles_collection_model_fixture: ArticlesCollectionModel,
-            abstract_model_fixture: AbstractModel,
-            regulation_model_fixture: RegulationModel
+        self,
+        book_model_fixture: BookModel,
+        internet_resource_model_fixture: InternetResourceModel,
+        articles_collection_model_fixture: ArticlesCollectionModel,
+        abstract_model_fixture: AbstractModel,
+        regulation_model_fixture: RegulationModel,
     ) -> None:
         """
         Тестирование функции итогового форматирования списка источников.
@@ -121,7 +129,7 @@ class TestGOST:
             GOSTInternetResource(internet_resource_model_fixture),
             GOSTCollectionArticle(articles_collection_model_fixture),
             GOSTAbtract(abstract_model_fixture),
-            GOSTRegulation(regulation_model_fixture)
+            GOSTRegulation(regulation_model_fixture),
         ]
         result = BaseCitationFormatter(models).format()
 

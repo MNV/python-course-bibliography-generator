@@ -21,9 +21,7 @@ class APABook(BaseCitationStyle):
 
     @property
     def template(self) -> Template:
-        return Template(
-            "$authors ($year). $title. $publishing_house."
-        )
+        return Template("$authors ($year). $title. $publishing_house.")
 
     def substitute(self) -> str:
         logger.info('Форматирование книги "%s" ...', self.data.title)
@@ -45,9 +43,7 @@ class APAInternetResource(BaseCitationStyle):
 
     @property
     def template(self) -> Template:
-        return Template(
-            "$article ($access_date) $website $link"
-        )
+        return Template("$article ($access_date) $website $link")
 
     def substitute(self) -> str:
         logger.info('Форматирование интернет-ресурса "%s" ...', self.data.article)
@@ -81,7 +77,7 @@ class APANewsPaperResource(BaseCitationStyle):
             authors=self.data.authors,
             news_title=self.data.news_title,
             publishing_year=self.data.publishing_year,
-            publishing_date=self.data.publishing_date
+            publishing_date=self.data.publishing_date,
         )
 
 

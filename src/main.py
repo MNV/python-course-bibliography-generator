@@ -5,8 +5,8 @@ from enum import Enum, unique
 
 import click
 
-from formatters.styles.gost import GOSTCitationFormatter
 from formatters.styles.apa import APACitationFormatter
+from formatters.styles.gost import GOSTCitationFormatter
 from logger import get_logger
 from readers.reader import SourcesReader
 from renderer import Renderer
@@ -26,15 +26,15 @@ class CitationEnum(Enum):
     APA = "apa"  # American Psychological Association
 
 
-style_map = {CitationEnum.APA.name: APACitationFormatter,
-             CitationEnum.GOST.name: GOSTCitationFormatter}
+style_map = {
+    CitationEnum.APA.name: APACitationFormatter,
+    CitationEnum.GOST.name: GOSTCitationFormatter,
+}
 
 
-def format_by_style(citation: str, models, path_output: str):
+def format_by_style(citation: str, models: list, path_output: str) -> None:
     logger.info(style_map[citation])
-    formatted_models = tuple(
-        str(item) for item in style_map[citation](models).format()
-    )
+    formatted_models = tuple(str(item) for item in style_map[citation](models).format())
     logger.info(f"Генерация выходного файла в формате ${citation}...")
     Renderer(formatted_models).render(path_output)
 
@@ -68,9 +68,9 @@ def format_by_style(citation: str, models, path_output: str):
     help="Путь к выходному файлу",
 )
 def process_input(
-        citation: str = CitationEnum.GOST.name,
-        path_input: str = INPUT_FILE_PATH,
-        path_output: str = OUTPUT_FILE_PATH,
+    citation: str = CitationEnum.GOST.name,
+    path_input: str = INPUT_FILE_PATH,
+    path_output: str = OUTPUT_FILE_PATH,
 ) -> None:
     """
     Генерация файла Word с оформленным библиографическим списком.

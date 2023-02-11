@@ -5,8 +5,14 @@ from typing import Any
 
 import pytest
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, AbstractModel, RegulationModel, \
-    NewsPaperModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    AbstractModel,
+    RegulationModel,
+    NewsPaperModel,
+)
 from readers.reader import (
     BookReader,
     SourcesReader,
@@ -14,7 +20,7 @@ from readers.reader import (
     ArticlesCollectionReader,
     AbstractReader,
     RegulationReader,
-    NewsPaperReader
+    NewsPaperReader,
 )
 from settings import TEMPLATE_FILE_PATH
 
@@ -205,5 +211,5 @@ class TestReaders:
             ArticlesCollectionModel.__name__,
             AbstractModel.__name__,
             RegulationModel.__name__,
-            NewsPaperModel.__name__
+            NewsPaperModel.__name__,
         }

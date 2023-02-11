@@ -3,8 +3,14 @@
 """
 import pytest
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, AbstractModel, \
-    RegulationModel, NewsPaperModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    AbstractModel,
+    RegulationModel,
+    NewsPaperModel,
+)
 
 
 @pytest.fixture
@@ -77,7 +83,7 @@ def abstract_model_fixture() -> AbstractModel:
         specialty_code="01.01.01",
         city="Спб.",
         year=2020,
-        pages="199"
+        pages="199",
     )
 
 
@@ -98,7 +104,7 @@ def regulation_model_fixture() -> RegulationModel:
         publishing_year="2020",
         publishing_source_id="5",
         publishing_article_id="15",
-        modification_date="9/11/2002"
+        modification_date="9/11/2002",
     )
 
 
@@ -116,5 +122,5 @@ def newspaper_model_fixture() -> NewsPaperModel:
         news_title="Южный Урал",
         publishing_year="2020",
         publishing_date="01.10",
-        publishing_number="5"
+        publishing_number="5",
     )

@@ -7,8 +7,14 @@ from typing import Type
 import openpyxl
 from openpyxl.workbook import Workbook
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, AbstractModel, RegulationModel, \
-    NewsPaperModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    AbstractModel,
+    RegulationModel,
+    NewsPaperModel,
+)
 from logger import get_logger
 from readers.base import BaseReader
 
@@ -149,6 +155,7 @@ class NewsPaperReader(BaseReader):
     """
     Чтение модели газеты.
     """
+
     @property
     def model(self) -> Type[NewsPaperModel]:
         return NewsPaperModel
@@ -165,7 +172,7 @@ class NewsPaperReader(BaseReader):
             "news_title": {2: str},
             "publishing_year": {3: int},
             "publishing_date": {4: str},
-            "publishing_number": {5: int}
+            "publishing_number": {5: int},
         }
 
 
@@ -181,7 +188,7 @@ class SourcesReader:
         ArticlesCollectionReader,
         AbstractReader,
         RegulationReader,
-        NewsPaperReader
+        NewsPaperReader,
     ]
 
     def __init__(self, path: str) -> None:

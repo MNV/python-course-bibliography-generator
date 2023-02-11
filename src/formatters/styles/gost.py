@@ -5,7 +5,13 @@ from string import Template
 
 from pydantic import BaseModel
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, AbstractModel, RegulationModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    AbstractModel,
+    RegulationModel,
+)
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
 
@@ -138,13 +144,15 @@ class GOSTRegulation(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$source \"$regulation_title\" от $acceptance_date № $regulation_id // $publishing_source. "
+            '$source "$regulation_title" от $acceptance_date № $regulation_id // $publishing_source. '
             "$publishing_year г. № $publishing_source_id. Ст. $publishing_article_id с изм. и допол. в ред. от "
             "$modification_date"
         )
 
     def substitute(self) -> str:
-        logger.info('Форматирование нормативного акта "%s" ...', self.data.regulation_title)
+        logger.info(
+            'Форматирование нормативного акта "%s" ...', self.data.regulation_title
+        )
 
         return self.template.substitute(
             regulation_title=self.data.regulation_title,
@@ -155,7 +163,7 @@ class GOSTRegulation(BaseCitationStyle):
             publishing_year=self.data.publishing_year,
             publishing_source_id=self.data.publishing_source_id,
             publishing_article_id=self.data.publishing_article_id,
-            modification_date=self.data.modification_date
+            modification_date=self.data.modification_date,
         )
 
 
@@ -169,7 +177,7 @@ class GOSTCitationFormatter:
         InternetResourceModel.__name__: GOSTInternetResource,
         ArticlesCollectionModel.__name__: GOSTCollectionArticle,
         AbstractModel.__name__: GOSTAbtract,
-        RegulationModel.__name__: GOSTRegulation
+        RegulationModel.__name__: GOSTRegulation,
     }
 
     def __init__(self, models: list[BaseModel]) -> None:
