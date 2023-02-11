@@ -181,7 +181,9 @@ class GOSTCitationFormatter:
 
         formatted_items = []
         for model in models:
-            formatted_items.append(self.formatters_map.get(type(model).__name__)(model))  # type: ignore
+            formatter = self.formatters_map.get(type(model).__name__)
+            if formatter is not None:
+                formatted_items.append(formatter(model))  # type: ignore
 
         self.formatted_items = formatted_items
 
