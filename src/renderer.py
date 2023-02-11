@@ -4,10 +4,11 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH  # pylint: disable=E0611
-from docx.shared import Pt
+from docx.shared import Pt, Cm
 
 
 class Renderer:
