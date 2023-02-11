@@ -7,10 +7,10 @@ from typing import Type
 import openpyxl
 from openpyxl.workbook import Workbook
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
+from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, AbstractModel, RegulationModel, \
+    NewsPaperModel
 from logger import get_logger
 from readers.base import BaseReader
-
 
 logger = get_logger(__name__)
 
@@ -90,6 +90,85 @@ class ArticlesCollectionReader(BaseReader):
         }
 
 
+class AbstractReader(BaseReader):
+    """
+    Чтение модели автореферата.
+    """
+
+    @property
+    def model(self) -> Type[AbstractModel]:
+        return AbstractModel
+
+    @property
+    def sheet(self) -> str:
+        return "Автореферат"
+
+    @property
+    def attributes(self) -> dict:
+        return {
+            "author": {0: str},
+            "abstract_title": {1: str},
+            "author_status": {2: str},
+            "science_field": {3: str},
+            "specialty_code": {4: str},
+            "city": {5: str},
+            "year": {6: int},
+            "pages": {7: str},
+        }
+
+
+class RegulationReader(BaseReader):
+    """
+    Чтение модели нормативного акта.
+    """
+
+    @property
+    def model(self) -> Type[RegulationModel]:
+        return RegulationModel
+
+    @property
+    def sheet(self) -> str:
+        return " Закон, нормативный акт и т.п."
+
+    @property
+    def attributes(self) -> dict:
+        return {
+            "source": {0: str},
+            "regulation_title": {1: str},
+            "acceptance_date": {2: date},
+            "regulation_id": {3: str},
+            "publishing_source": {4: str},
+            "publishing_year": {5: int},
+            "publishing_source_id": {6: str},
+            "publishing_article_id": {7: str},
+            "modification_date": {8: date},
+        }
+
+
+class NewsPaperReader(BaseReader):
+    """
+    Чтение модели газеты.
+    """
+    @property
+    def model(self) -> Type[NewsPaperModel]:
+        return NewsPaperModel
+
+    @property
+    def sheet(self) -> str:
+        return "Статья из газеты"
+
+    @property
+    def attributes(self) -> dict:
+        return {
+            "authors": {0: str},
+            "article_title": {1: str},
+            "news_title": {2: str},
+            "publishing_year": {3: int},
+            "publishing_date": {4: str},
+            "publishing_number": {5: int}
+        }
+
+
 class SourcesReader:
     """
     Чтение из источника данных.
@@ -100,6 +179,9 @@ class SourcesReader:
         BookReader,
         InternetResourceReader,
         ArticlesCollectionReader,
+        AbstractReader,
+        RegulationReader,
+        NewsPaperReader
     ]
 
     def __init__(self, path: str) -> None:
