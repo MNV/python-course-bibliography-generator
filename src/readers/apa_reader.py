@@ -7,13 +7,7 @@ from typing import Type
 import openpyxl
 from openpyxl.workbook import Workbook
 
-from formatters.models import (
-    BookModel,
-    InternetResourceModel,
-    ArticlesCollectionModel,
-    NewspaperCollectionModel,
-    DissertationCollectionModel,
-)
+from formatters.models import BookModel, InternetResourceModel
 from logger import get_logger
 from readers.base import BaseReader
 
@@ -69,85 +63,7 @@ class InternetResourceReader(BaseReader):
         }
 
 
-class ArticlesCollectionReader(BaseReader):
-    """
-    Чтение модели сборника статей.
-    """
-
-    @property
-    def model(self) -> Type[ArticlesCollectionModel]:
-        return ArticlesCollectionModel
-
-    @property
-    def sheet(self) -> str:
-        return "Статья из сборника"
-
-    @property
-    def attributes(self) -> dict:
-        return {
-            "authors": {0: str},
-            "article_title": {1: str},
-            "collection_title": {2: str},
-            "city": {3: str},
-            "publishing_house": {4: str},
-            "year": {5: int},
-            "pages": {6: str},
-        }
-
-
-class NewspaperReader(BaseReader):
-    """
-    Чтение модели статьи из газеты.
-    """
-
-    @property
-    def model(self) -> Type[NewspaperCollectionModel]:
-        return NewspaperCollectionModel
-
-    @property
-    def sheet(self) -> str:
-        return "Статья из газеты"
-
-    @property
-    def attributes(self) -> dict:
-        return {
-            "authors": {0: str},
-            "article_title": {1: str},
-            "newspaper_title": {2: str},
-            "year": {3: int},
-            "date": {4: str},
-            "article_number": {5: int},
-        }
-
-
-class DissertationReader(BaseReader):
-    """
-    Чтение модели диссертации.
-    """
-
-    @property
-    def model(self) -> Type[DissertationCollectionModel]:
-        return DissertationCollectionModel
-
-    @property
-    def sheet(self) -> str:
-        return "Диссертация"
-
-    @property
-    def attributes(self) -> dict:
-        return {
-            "author": {0: str},
-            "dissertation_title": {1: str},
-            "autor_grade": {2: str},
-            "science_branch": {3: str},
-            "speciality_code": {4: str},
-            "city": {5: str},
-            "year": {6: int},
-            "pages": {7: int},
-        }
-
-
-class SourcesReader:
+class APASourcesReader:
     """
     Чтение из источника данных.
     """
@@ -156,9 +72,6 @@ class SourcesReader:
     readers = [
         BookReader,
         InternetResourceReader,
-        ArticlesCollectionReader,
-        NewspaperReader,
-        DissertationReader,
     ]
 
     def __init__(self, path: str) -> None:

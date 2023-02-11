@@ -54,7 +54,6 @@ class InternetResourceModel(BaseModel):
 
 
 class ArticlesCollectionModel(BaseModel):
-
     """
     Модель сборника статей:
 
@@ -78,3 +77,55 @@ class ArticlesCollectionModel(BaseModel):
     publishing_house: str
     year: int = Field(..., gt=0)
     pages: str
+
+
+class NewspaperCollectionModel(BaseModel):
+    """
+    Модель статьи из газеты:
+
+    .. code-block::
+
+        NewspaperCollectionModel(
+            authors="Иванов И.М., Петров С.Н.",
+            article_title="Наука как искусство",
+            newspaper_title="Южный Урал",
+            year=1980,
+            date="01.10",
+            article_number=5,
+        )
+    """
+
+    authors: str
+    article_title: str
+    newspaper_title: str
+    year: int = Field(..., gt=0)
+    date: str
+    article_number: int
+
+
+class DissertationCollectionModel(BaseModel):
+    """
+    Модель диссертации:
+
+    .. code-block::
+
+        DissertationCollectionModel(
+            author="Иванов И.М.",
+            dissertation_title="Наука как искусство",
+            autor_grade="д-р. / канд.",
+            science_branch="экон.",
+            speciality_code="01.01.01",
+            city="СПб.",
+            year=2020,
+            pages=199
+        )
+    """
+
+    author: str
+    dissertation_title: str
+    autor_grade: str
+    science_branch: str
+    speciality_code: str
+    city: str
+    year: int = Field(..., gt=0)
+    pages: int

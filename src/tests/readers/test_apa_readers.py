@@ -12,13 +12,10 @@ from formatters.models import (
     NewspaperCollectionModel,
     DissertationCollectionModel,
 )
-from readers.reader import (
+from readers.apa_reader import (
     BookReader,
-    SourcesReader,
+    APASourcesReader,
     InternetResourceReader,
-    ArticlesCollectionReader,
-    NewspaperReader,
-    DissertationReader,
 )
 from settings import TEMPLATE_FILE_PATH
 
@@ -35,7 +32,7 @@ class TestReaders:
         :return:
         """
 
-        return SourcesReader(TEMPLATE_FILE_PATH).workbook
+        return APASourcesReader(TEMPLATE_FILE_PATH).workbook
 
     def test_book(self, workbook: Any) -> None:
         """
@@ -86,47 +83,18 @@ class TestReaders:
         # проверка общего количества атрибутов
         assert len(model_type.schema().get("properties", {}).keys()) == 4
 
-    def test_articles_collection(self, workbook: Any) -> None:
-        """
-        Тестирование чтения сборника статей.
-
-        :param workbook: Объект тестовой рабочей книги.
-        """
-
-        models = ArticlesCollectionReader(workbook).read()
-
-        assert len(models) == 1
-        model = models[0]
-
-        model_type = ArticlesCollectionModel
-
-        assert isinstance(model, model_type)
-        assert model.authors == "Иванов И.М., Петров С.Н."
-        assert model.article_title == "Наука как искусство"
-        assert model.collection_title == "Сборник научных трудов"
-        assert model.city == "СПб."
-        assert model.publishing_house == "АСТ"
-        assert model.year == 2020
-        assert model.pages == "25-30"
-
-        # проверка общего количества атрибутов
-        assert len(model_type.schema().get("properties", {}).keys()) == 7
-
     def test_sources_reader(self) -> None:
         """
         Тестирование функции чтения всех моделей из источника.
         """
 
-        models = SourcesReader(TEMPLATE_FILE_PATH).read()
+        models = APASourcesReader(TEMPLATE_FILE_PATH).read()
         # проверка общего считанного количества моделей
-        assert len(models) == 10
+        assert len(models) == 7
 
         # проверка наличия всех ожидаемых типов моделей среди типов считанных моделей
         model_types = {model.__class__.__name__ for model in models}
         assert model_types == {
             BookModel.__name__,
             InternetResourceModel.__name__,
-            ArticlesCollectionModel.__name__,
-            NewspaperCollectionModel.__name__,
-            DissertationCollectionModel.__name__,
         }
