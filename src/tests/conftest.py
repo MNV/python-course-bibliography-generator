@@ -93,7 +93,7 @@ def thesis_model_fixture() -> ThesisModel:
     """
 
     return ThesisModel(
-        authors="Иванов И.М.",
+        author="Иванов И.М.",
         title="Наука как искусство",
         degree="д-р. / канд.",
         field="экон.",

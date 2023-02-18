@@ -32,7 +32,7 @@ class TestAPA:
 
         assert (
                 model.formatted
-                == "Наука как искусство // Ведомости URL: https://www.vedomosti.ru (дата обращения: 01.01.2021)."
+                == "/i/Наука как искусство/i/. (01.01.2021). Ведомости. https://www.vedomosti.ru"
         )
 
     def test_magazine_article(
@@ -49,7 +49,7 @@ class TestAPA:
 
         assert (
                 model.formatted
-                == "Иванов И.М., Петров С.Н. Наука как искусство // Образование и наука. 2020. Т. 10. С. 25-30."
+                == "Иванов И.М., Петров С.Н. (2020). Наука как искусство. /i/Образование и наука/i/, 10, 25-30."
         )
 
     def test_citation_formatter(
@@ -72,5 +72,5 @@ class TestAPA:
         result = BaseCitationFormatter(models).format()
 
         # тестирование сортировки списка источников
-        assert result[0] == models[1]
-        assert result[1] == models[0]
+        assert result[0] == models[0]
+        assert result[1] == models[1]

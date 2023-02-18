@@ -131,7 +131,7 @@ class TestReaders:
         assert model.article_title == "Наука как искусство"
         assert model.magazine_title == "Образование и наука"
         assert model.year == 2020
-        assert model.volume == "10"
+        assert model.volume == 10
         assert model.pages == "25-30"
 
         # проверка общего количества атрибутов
@@ -152,7 +152,7 @@ class TestReaders:
         model_type = ThesisModel
 
         assert isinstance(model, model_type)
-        assert model.authors == "Иванов И.М."
+        assert model.author == "Иванов И.М."
         assert model.title == "Наука как искусство"
         assert model.degree == "д-р. / канд."
         assert model.field == "экон."

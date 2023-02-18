@@ -10,7 +10,7 @@ from formatters.models import (
     MagazineArticleModel,
 )
 from readers.apa_reader import (
-    APAReader,
+    APASourcesReader,
     InternetResourceReader,
     MagazineArticleReader,
 )
@@ -29,7 +29,7 @@ class TestReaders:
         :return:
         """
 
-        return APAReader(TEMPLATE_FILE_PATH).workbook
+        return APASourcesReader(TEMPLATE_FILE_PATH).workbook
 
     def test_internet_resource(self, workbook: Any) -> None:
         """
@@ -73,7 +73,7 @@ class TestReaders:
         assert model.article_title == "Наука как искусство"
         assert model.magazine_title == "Образование и наука"
         assert model.year == 2020
-        assert model.volume == "10"
+        assert model.volume == 10
         assert model.pages == "25-30"
 
         # проверка общего количества атрибутов
@@ -84,7 +84,7 @@ class TestReaders:
         Тестирование функции чтения всех моделей из источника.
         """
 
-        models = APAReader(TEMPLATE_FILE_PATH).read()
+        models = APASourcesReader(TEMPLATE_FILE_PATH).read()
         # проверка общего считанного количества моделей
         assert len(models) == 4
 

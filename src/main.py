@@ -33,7 +33,7 @@ class CitationEnum(Enum):
     "--citation",
     "-c",
     "citation",
-    type=click.Choice([item.name for item in CitationEnum], case_sensitive=False),
+    type=click.Choice(list(CitationEnum), case_sensitive=False),
     default=CitationEnum.GOST.name,
     show_default=True,
     help="Стиль цитирования",
