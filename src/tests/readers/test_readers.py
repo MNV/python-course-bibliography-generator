@@ -5,12 +5,20 @@ from typing import Any
 
 import pytest
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    MagazineArticleModel,
+    ThesisModel
+)
 from readers.reader import (
     BookReader,
     SourcesReader,
     InternetResourceReader,
     ArticlesCollectionReader,
+    MagazineArticleReader,
+    ThesisReader
 )
 from settings import TEMPLATE_FILE_PATH
 
@@ -104,6 +112,58 @@ class TestReaders:
         # проверка общего количества атрибутов
         assert len(model_type.schema().get("properties", {}).keys()) == 7
 
+    def test_magazine_article(self, workbook: Any) -> None:
+        """
+        Тестирование чтения статьи из журнала.
+
+        :param workbook: Объект тестовой рабочей книги.
+        """
+
+        models = MagazineArticleReader(workbook).read()
+
+        assert len(models) == 1
+        model = models[0]
+
+        model_type = MagazineArticleModel
+
+        assert isinstance(model, model_type)
+        assert model.authors == "Иванов И.М., Петров С.Н."
+        assert model.article_title == "Наука как искусство"
+        assert model.magazine_title == "Образование и наука"
+        assert model.year == 2020
+        assert model.volume == "10"
+        assert model.pages == "25-30"
+
+        # проверка общего количества атрибутов
+        assert len(model_type.schema().get("properties", {}).keys()) == 6
+
+    def test_thesis(self, workbook: Any) -> None:
+        """
+        Тестирование чтения диссертации.
+
+        :param workbook: Объект тестовой рабочей книги.
+        """
+
+        models = ThesisReader(workbook).read()
+
+        assert len(models) == 1
+        model = models[0]
+
+        model_type = ThesisModel
+
+        assert isinstance(model, model_type)
+        assert model.authors == "Иванов И.М."
+        assert model.title == "Наука как искусство"
+        assert model.degree == "д-р. / канд."
+        assert model.field == "экон."
+        assert model.code == "01.01.01"
+        assert model.city == "СПб."
+        assert model.year == 2020
+        assert model.pages == 199
+
+        # проверка общего количества атрибутов
+        assert len(model_type.schema().get("properties", {}).keys()) == 8
+
     def test_sources_reader(self) -> None:
         """
         Тестирование функции чтения всех моделей из источника.
@@ -111,7 +171,7 @@ class TestReaders:
 
         models = SourcesReader(TEMPLATE_FILE_PATH).read()
         # проверка общего считанного количества моделей
-        assert len(models) == 8
+        assert len(models) == 10
 
         # проверка наличия всех ожидаемых типов моделей среди типов считанных моделей
         model_types = {model.__class__.__name__ for model in models}
@@ -119,4 +179,6 @@ class TestReaders:
             BookModel.__name__,
             InternetResourceModel.__name__,
             ArticlesCollectionModel.__name__,
+            MagazineArticleModel.__name__,
+            ThesisModel.__name__,
         }
