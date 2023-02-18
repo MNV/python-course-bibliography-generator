@@ -7,38 +7,11 @@ from typing import Type
 import openpyxl
 from openpyxl.workbook import Workbook
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, MagazineArticleModel, ThesisModel
+from formatters.models import InternetResourceModel, MagazineArticleModel
 from logger import get_logger
 from readers.base import BaseReader
 
-
 logger = get_logger(__name__)
-
-
-class BookReader(BaseReader):
-    """
-    Чтение модели книги.
-    """
-
-    @property
-    def model(self) -> Type[BookModel]:
-        return BookModel
-
-    @property
-    def sheet(self) -> str:
-        return "Книга"
-
-    @property
-    def attributes(self) -> dict:
-        return {
-            "authors": {0: str},
-            "title": {1: str},
-            "edition": {2: str},
-            "city": {3: str},
-            "publishing_house": {4: str},
-            "year": {5: int},
-            "pages": {6: int},
-        }
 
 
 class InternetResourceReader(BaseReader):
@@ -64,35 +37,9 @@ class InternetResourceReader(BaseReader):
         }
 
 
-class ArticlesCollectionReader(BaseReader):
-    """
-    Чтение модели сборника статей.
-    """
-
-    @property
-    def model(self) -> Type[ArticlesCollectionModel]:
-        return ArticlesCollectionModel
-
-    @property
-    def sheet(self) -> str:
-        return "Статья из сборника"
-
-    @property
-    def attributes(self) -> dict:
-        return {
-            "authors": {0: str},
-            "article_title": {1: str},
-            "collection_title": {2: str},
-            "city": {3: str},
-            "publishing_house": {4: str},
-            "year": {5: int},
-            "pages": {6: str},
-        }
-
-
 class MagazineArticleReader(BaseReader):
     """
-    Чтение модели статьи из журнала
+    Чтение модели книги.
     """
 
     @property
@@ -115,51 +62,20 @@ class MagazineArticleReader(BaseReader):
         }
 
 
-class ThesisReader(BaseReader):
-    """
-    Чтение модели диссертации
-    """
-
-    @property
-    def model(self) -> Type[ThesisModel]:
-        return ThesisModel
-
-    @property
-    def sheet(self) -> str:
-        return "Диссертация"
-
-    @property
-    def attributes(self) -> dict:
-        return {
-            "author": {0: str},
-            "title": {1: str},
-            "degree": {2: str},
-            "field": {3: str},
-            "code": {4: date},
-            "city": {5: str},
-            "year": {6: int},
-            "pages": {7: int},
-        }
-
-
-class SourcesReader:
+class APASourcesReader:
     """
     Чтение из источника данных.
     """
 
     # зарегистрированные читатели
     readers = [
-        BookReader,
         InternetResourceReader,
-        ArticlesCollectionReader,
-        MagazineArticleReader,
-        ThesisReader
+        MagazineArticleReader
     ]
 
     def __init__(self, path: str) -> None:
         """
         Конструктор.
-
         :param path: Путь к исходному файлу для чтения.
         """
 
@@ -169,7 +85,6 @@ class SourcesReader:
     def read(self) -> list:
         """
         Чтение исходного файла.
-
         :return: Список прочитанных моделей (строк).
         """
 
