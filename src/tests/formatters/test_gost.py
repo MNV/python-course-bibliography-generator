@@ -2,9 +2,9 @@
 Тестирование функций оформления списка источников по ГОСТ Р 7.0.5-2008.
 """
 
-from formatters.base import BaseCitationFormatter
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
-from formatters.styles.gost import GOSTBook, GOSTInternetResource, GOSTCollectionArticle
+from src.formatters.base import BaseCitationFormatter
+from src.formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
+from src.formatters.styles.gost import GOSTBook, GOSTInternetResource, GOSTCollectionArticle
 
 
 class TestGOST:

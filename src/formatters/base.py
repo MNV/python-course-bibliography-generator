@@ -2,8 +2,8 @@
 Базовые функции форматирования списка источников
 """
 
-from formatters.styles.base import BaseCitationStyle
-from logger import get_logger
+from src.formatters.styles.base import BaseCitationStyle
+from src.logger import get_logger
 
 
 logger = get_logger(__name__)

@@ -5,14 +5,14 @@ from typing import Any
 
 import pytest
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
-from readers.reader import (
+from src.formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
+from src.readers.reader import (
     BookReader,
     SourcesReader,
     InternetResourceReader,
     ArticlesCollectionReader,
 )
-from settings import TEMPLATE_FILE_PATH
+from src.settings import TEMPLATE_FILE_PATH
 
 
 class TestReaders:

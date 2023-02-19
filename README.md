@@ -5,7 +5,8 @@ Console application for creating a bibliography list.
 The application allows you to automate the process of generating a bibliography list according to the specified citation standard.
 
 Supported citation styles:
-- ГОСТ Р 7.0.5-2008 
+- ГОСТ Р 7.0.5-2008
+- Modern Language Association 9th edition
 
 ## Installation
 

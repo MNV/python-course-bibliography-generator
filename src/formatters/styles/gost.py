@@ -5,10 +5,10 @@ from string import Template
 
 from pydantic import BaseModel
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
-from formatters.styles.base import BaseCitationStyle
-from logger import get_logger
-
+from src.formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, ArticleMagazineModel, \
+    LawModel
+from src.formatters.styles.base import BaseCitationStyle
+from src.logger import get_logger
 
 logger = get_logger(__name__)
 
@@ -27,7 +27,6 @@ class GOSTBook(BaseCitationStyle):
         )
 
     def substitute(self) -> str:
-
         logger.info('Форматирование книги "%s" ...', self.data.title)
 
         return self.template.substitute(
@@ -64,7 +63,6 @@ class GOSTInternetResource(BaseCitationStyle):
         )
 
     def substitute(self) -> str:
-
         logger.info('Форматирование интернет-ресурса "%s" ...', self.data.article)
 
         return self.template.substitute(
@@ -89,7 +87,6 @@ class GOSTCollectionArticle(BaseCitationStyle):
         )
 
     def substitute(self) -> str:
-
         logger.info('Форматирование сборника статей "%s" ...', self.data.article_title)
 
         return self.template.substitute(
@@ -103,6 +100,62 @@ class GOSTCollectionArticle(BaseCitationStyle):
         )
 
 
+class GOSTMagazineArticle(BaseCitationStyle):
+    """
+    Форматирование для статьи из журнала.
+    """
+
+    data: ArticleMagazineModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$authors $article_title // $magazine_title. – $year. – №$number. – С. $pages."
+        )
+
+    def substitute(self) -> str:
+        logger.info('Форматирование статьи из журнала "%s" ...', self.data.article_title)
+
+        return self.template.substitute(
+            authors=self.data.authors,
+            article_title=self.data.article_title,
+            magazine_title=self.data.magazine_title,
+            year=self.data.year,
+            number=self.data.number,
+            pages=self.data.pages,
+        )
+
+
+class GOSTLaw(BaseCitationStyle):
+    """
+    Форматирование для закона, нормативного актa и т.п.
+    """
+
+    data: LawModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$type \"$law_title\" от $passing_date № $number // $source. - $source_year г. - № $source_number. - Ст. "
+            "$article_number с изм. и допол. в ред. от $start_date."
+        )
+
+    def substitute(self) -> str:
+        logger.info('Форматирование закона, нормативного актa и т.п. "%s" ...', self.data.law_title)
+
+        return self.template.substitute(
+            type=self.data.type,
+            law_title=self.data.law_title,
+            passing_date=self.data.passing_date,
+            number=self.data.number,
+            source=self.data.source,
+            source_year=self.data.source_year,
+            source_number=self.data.source_number,
+            article_number=self.data.article_number,
+            start_date=self.data.start_date,
+        )
+
+
 class GOSTCitationFormatter:
     """
     Базовый класс для итогового форматирования списка источников.
@@ -112,6 +165,8 @@ class GOSTCitationFormatter:
         BookModel.__name__: GOSTBook,
         InternetResourceModel.__name__: GOSTInternetResource,
         ArticlesCollectionModel.__name__: GOSTCollectionArticle,
+        ArticleMagazineModel.__name__: GOSTMagazineArticle,
+        LawModel.__name__: GOSTLaw,
     }
 
     def __init__(self, models: list[BaseModel]) -> None:
