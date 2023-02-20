@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from renderer import Renderer
+from src.renderer import Renderer
 
 
 class TestRenderer:

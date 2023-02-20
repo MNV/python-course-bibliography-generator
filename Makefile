@@ -3,7 +3,6 @@
 # обновление сборки Docker-контейнера
 build:
 	docker compose build
-
 # генерация документации
 docs-html:
 	docker compose run --workdir /docs app /bin/bash -c "make html"

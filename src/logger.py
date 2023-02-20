@@ -3,7 +3,7 @@
 """
 import logging
 
-from settings import LOGGING_FORMAT, LOGGING_LEVEL, LOGGING_PATH
+from src.settings import LOGGING_FORMAT, LOGGING_LEVEL, LOGGING_PATH
 
 
 def get_logger(

@@ -2,9 +2,11 @@
 Тестирование функций оформления списка источников по ГОСТ Р 7.0.5-2008.
 """
 
-from formatters.base import BaseCitationFormatter
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
-from formatters.styles.gost import GOSTBook, GOSTInternetResource, GOSTCollectionArticle
+from src.formatters.base import BaseCitationFormatter
+from src.formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, ArticleMagazineModel, \
+    LawModel
+from src.formatters.styles.gost import GOSTBook, GOSTInternetResource, GOSTCollectionArticle, GOSTMagazineArticle, \
+    GOSTLaw
 
 
 class TestGOST:
@@ -59,6 +61,40 @@ class TestGOST:
         assert (
             model.formatted
             == "Иванов И.М., Петров С.Н. Наука как искусство // Сборник научных трудов. – СПб.: АСТ, 2020. – С. 25-30."
+        )
+
+    def test_article_magazine(
+        self, article_magazine_model_fixture: ArticleMagazineModel
+    ) -> None:
+        """
+        Тестирование форматирования статьи из журнала.
+
+        :param ArticleMagazineModel article_magazine_model_fixture: Фикстура модели статьи из журнала
+        :return:
+        """
+
+        model = GOSTMagazineArticle(article_magazine_model_fixture)
+
+        assert (
+            model.formatted
+            == "Иванов И.М., Петров С.Н. Наука как искусство // Образование и наука. – 2020. – №10. – С. 25-30."
+        )
+
+    def test_law(
+        self, law_model_fixture: LawModel
+    ) -> None:
+        """
+        Тестирование форматирования закона и т. д.
+
+        :param LawModel law_model_fixture: Фикстура модели закона и т. д.
+        :return:
+        """
+
+        model = GOSTLaw(law_model_fixture)
+
+        assert (
+            model.formatted
+            == "Конституция Российской Федерации \"Наука как искусство\" от 01.01.2000 № 1234-56 // Парламентская газета. - 2020 г. - № 5. - Ст. 15 с изм. и допол. в ред. от 11.09.2002."
         )
 
     def test_citation_formatter(

@@ -5,11 +5,13 @@ from enum import Enum, unique
 
 import click
 
-from formatters.styles.gost import GOSTCitationFormatter
+from src.formatters.styles.mla import MLACitationFormatter
+from src.formatters.styles.gost import GOSTCitationFormatter
+
 from logger import get_logger
-from readers.reader import SourcesReader
+from readers.reader import SourcesReader, MLASourcesReader
 from renderer import Renderer
-from settings import INPUT_FILE_PATH, OUTPUT_FILE_PATH
+from settings import INPUT_FILE_PATH, OUTPUT_FILE_PATH, OUTPUT_MLA_FILE_PATH
 
 logger = get_logger(__name__)
 
@@ -53,7 +55,7 @@ class CitationEnum(Enum):
     show_default=True,
     help="Путь к выходному файлу",
 )
-def process_input(
+def process_input_gost(
     citation: str = CitationEnum.GOST.name,
     path_input: str = INPUT_FILE_PATH,
     path_output: str = OUTPUT_FILE_PATH,
@@ -87,10 +89,45 @@ def process_input(
     logger.info("Команда успешно завершена.")
 
 
+def process_input_mla(
+    citation: str = CitationEnum.MLA.name,
+    path_input: str = INPUT_FILE_PATH,
+    path_output: str = OUTPUT_MLA_FILE_PATH,
+) -> None:
+    """
+    Генерация файла Word с оформленным библиографическим списком.
+
+    :param str citation: Стиль цитирования
+    :param str path_input: Путь к входному файлу
+    :param str path_output: Путь к выходному файлу
+    """
+
+    logger.info(
+        """Обработка команды с параметрами:
+        - Стиль цитирования: %s.
+        - Путь к входному файлу: %s.
+        - Путь к выходному файлу: %s.""",
+        citation,
+        path_input,
+        path_output,
+    )
+
+    models = MLASourcesReader(path_input).read()
+    formatted_models = tuple(
+        str(item) for item in MLACitationFormatter(models).format()
+    )
+
+    logger.info("Генерация выходного файла ...")
+    Renderer(formatted_models).render(path_output)
+
+    logger.info("Команда успешно завершена.")
+
+
 if __name__ == "__main__":
     try:
         # запуск обработки входного файла
-        process_input()
+        process_input_mla()
+        process_input_gost()
     except Exception as ex:
         logger.error("При обработке команды возникла ошибка: %s", ex)
         raise
