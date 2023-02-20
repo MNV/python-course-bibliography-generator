@@ -142,9 +142,9 @@ class MLABookModel(BaseModel):
         MLABookModel(
             author_last_name="Smith",
             author_first_name="Thomas",
-            title="",
-            edition="",
-            publisher="",
+            title="The Citation Manual for Students: A Quick Guide",
+            edition="2nd",
+            publisher="Wiley",
             year=2020,
         )
     """
@@ -166,8 +166,8 @@ class MLAInternetResourceModel(BaseModel):
         MLAInternetResourceModel(
             author_last_name="Smith",
             author_first_name="Thomas",
-            title: "Whales Likely Impacted by Great Pacific Garbage Patch."
-            website: "The Ocean Cleanup"
+            title="Whales Likely Impacted by Great Pacific Garbage Patch."
+            website="The Ocean Cleanup"
             publication_date="10 Apr. 2019",
             url="www.theoceancleanup.com/updates/whales-likely-impacted-by-great-pacific-garbage-patch",
         )
