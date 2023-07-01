@@ -20,7 +20,7 @@ class BookModel(BaseModel):
             city="СПб.",
             publishing_house="Просвещение",
             year=2020,
-            pages=999,
+            pages=999hjrj,
         )
     """
 
