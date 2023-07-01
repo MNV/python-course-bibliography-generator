@@ -4,7 +4,6 @@
 
 from abc import ABC, abstractmethod
 from string import Template
-
 from pydantic import BaseModel
 
 
