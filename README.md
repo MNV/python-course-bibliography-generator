@@ -6,6 +6,8 @@ The application allows you to automate the process of generating a bibliography 
 
 Supported citation styles:
 - ГОСТ Р 7.0.5-2008 
+- APA
+- MLA
 
 ## Installation
 
@@ -53,10 +55,18 @@ to fill it without changing the original template:
    
 5. Now it is possible to run the command inside the Docker container 
     as usual, passing needed arguments to the console application:
+    For GOST:
     ```shell
     docker compose run app python main.py --citation gost --path_input /media/input.xlsx --path_output /media/output.docx
     ```
-   
+    For APA:
+    ```shell
+    docker compose run app python main.py --citation apa --path_input /media/input.xlsx --path_output /media/output.docx
+    ```
+    For MLA:
+    ```shell
+    docker compose run app python main.py --citation mla --path_input /media/input.xlsx --path_output /media/output.docx
+    ```
    Also, it is possible to omit the arguments to use their defaults:
     ```shell
     docker compose run app python main.py

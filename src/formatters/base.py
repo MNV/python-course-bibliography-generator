@@ -32,4 +32,4 @@ class BaseCitationFormatter:
 
         logger.info("Общее форматирование ...")
 
-        return sorted(self.formatted_items, key=lambda item: item.formatted)
+        return sorted(self.formatted_items, key=lambda item: item.formatted, reverse=False)
