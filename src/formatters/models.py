@@ -7,6 +7,18 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
+class NormativeActModel(BaseModel):
+    type: str
+    title: str
+    adoption_date: str
+    act_numer: str
+    source: str
+    publication_year: int = Field(..., gt=0)
+    source_number: int
+    article_number: int
+    revision: str
+
+
 class BookModel(BaseModel):
     """
     Модель книги:
