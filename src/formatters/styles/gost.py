@@ -5,7 +5,7 @@ from string import Template
 
 from pydantic import BaseModel
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, RegulatoryActModel
+from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, RegulatoryActModel, ArticleModel
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
 
@@ -48,6 +48,50 @@ class GOSTBook(BaseCitationStyle):
         """
 
         return f"{self.data.edition} изд. – " if self.data.edition else ""
+
+
+class GOSTArticle(BaseCitationStyle):
+    """
+    Форматирование для книг.
+    """
+
+    data: ArticleModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$authors $title // $journal_name. $year. №$No. С. $pages."
+        )
+
+    @property
+    def template_many_authors(self) -> Template:
+        return Template(
+            "$title / $main_author [и др.] // $journal_name. $year. №$No. С. $pages."
+        )
+
+    def substitute(self) -> str:
+
+        logger.info('Форматирование статьи журнала "%s" ...', self.data.title)
+
+        authors = self.data.authors.split(",")
+        if len(authors) >=4:
+            return self.template_many_authors.substitute(
+                title=self.data.title,
+                main_author=authors[0],
+                journal_name=self.data.journal_name,
+                year=self.data.year,
+                No=self.data.No,
+                pages=self.data.pages,
+            )
+        else: 
+            return self.template.substitute(
+                authors=self.data.authors,
+                title=self.data.title,
+                journal_name=self.data.journal_name,
+                year=self.data.year,
+                No=self.data.No,
+                pages=self.data.pages,
+        )
 
 
 class GOSTRegulatoryAct(BaseCitationStyle):
@@ -143,6 +187,7 @@ class GOSTCitationFormatter:
         InternetResourceModel.__name__: GOSTInternetResource,
         ArticlesCollectionModel.__name__: GOSTCollectionArticle,
         RegulatoryActModel.__name__: GOSTRegulatoryAct,
+        ArticleModel.__name__: GOSTArticle,
     }
 
     def __init__(self, models: list[BaseModel]) -> None:

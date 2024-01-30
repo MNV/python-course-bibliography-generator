@@ -33,6 +33,31 @@ class BookModel(BaseModel):
     pages: int = Field(..., gt=0)
 
 
+
+class ArticleModel(BaseModel):
+    """
+    Модель статьи из журнала:
+
+    .. code-block::
+
+        ArticleModel(
+            authors="Иванов И.М., Петров С.Н.",
+            title="Наука как искусство",
+            journal_name="Просвещение",
+            year=2020,
+            No=10,
+            pages="25-30",
+        )
+    """
+
+    authors: str
+    title: str
+    journal_name: str
+    year: int = Field(..., gt=0)
+    No: int = Field(..., gt=0)
+    pages: str
+
+
 class RegulatoryActModel(BaseModel):
     """
     Модель нормативного акта:
