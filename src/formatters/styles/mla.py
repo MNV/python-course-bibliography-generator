@@ -1,5 +1,5 @@
 """
-Стиль цитирования по ГОСТ Р 7.0.5-2008.
+Стиль цитирования по MLA.
 """
 from string import Template
 
@@ -13,7 +13,7 @@ from logger import get_logger
 logger = get_logger(__name__)
 
 
-class GOSTBook(BaseCitationStyle):
+class MLABook(BaseCitationStyle):
     """
     Форматирование для книг.
     """
@@ -23,7 +23,7 @@ class GOSTBook(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$authors $title. – $edition$city: $publishing_house, $year. – $pages с."
+            "$authors $title. $edition$city: $publishing_house, $year. $pages."
         )
 
     def substitute(self) -> str:
@@ -46,11 +46,22 @@ class GOSTBook(BaseCitationStyle):
 
         :return: Информация об издательстве.
         """
+        if self.data.edition:
+            ed = int(self.data.edition.split("-")[0])
+            res = f"{ed}th"
+            if  10 <= ed % 100 <=19:
+                res = f"{ed}th"
+            elif ed % 10 == 1:         
+                res = f"{ed}st"       
+            elif ed % 10 == 2:     
+                res = f"{ed}nd"           
+            elif ed % 10 == 3:      
+                res = f"{ed}rd"         
+            return f"{res} ed., "
+        return ""
 
-        return f"{self.data.edition} изд. – " if self.data.edition else ""
 
-
-class GOSTArticle(BaseCitationStyle):
+class MLAArticle(BaseCitationStyle):
     """
     Форматирование для книг.
     """
@@ -60,13 +71,7 @@ class GOSTArticle(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$authors $title // $journal_name. $year. №$No. С. $pages."
-        )
-
-    @property
-    def template_many_authors(self) -> Template:
-        return Template(
-            "$title / $main_author [и др.] // $journal_name. $year. №$No. С. $pages."
+            '$authors. "$title." $journal_name, no. $No, $year, pp. $pages.'
         )
 
     def substitute(self) -> str:
@@ -74,17 +79,13 @@ class GOSTArticle(BaseCitationStyle):
         logger.info('Форматирование статьи журнала "%s" ...', self.data.title)
 
         authors = self.data.authors.split(",")
-        if len(authors) >= 4:
-            return self.template_many_authors.substitute(
-                title=self.data.title,
-                main_author=authors[0],
-                journal_name=self.data.journal_name,
-                year=self.data.year,
-                No=self.data.No,
-                pages=self.data.pages,
-            )
+        res_authors = self.data.authors
+        if len(authors) == 2:
+            res_authors = f"{authors[0]} and {authors[1]}"
+        elif len(authors) >= 3:
+            res_authors = f"{authors[0]}, et al"
         return self.template.substitute(
-            authors=self.data.authors,
+            authors=res_authors,
             title=self.data.title,
             journal_name=self.data.journal_name,
             year=self.data.year,
@@ -93,7 +94,7 @@ class GOSTArticle(BaseCitationStyle):
         )
 
 
-class GOSTRegulatoryAct(BaseCitationStyle):
+class MLARegulatoryAct(BaseCitationStyle):
     """
     Форматирование для нормативного акта.
     """
@@ -103,7 +104,7 @@ class GOSTRegulatoryAct(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            '$act_type "$full_name" от $acception_date №$act_No // $publishing_source, $year. – №$source_No – Ст. $article_No с изм. и допол. в ред. от $amended_from.'
+            '$full_name. Pub L. $act_No. $acception_date. $publishing_source.'
         )
 
     def substitute(self) -> str:
@@ -111,19 +112,14 @@ class GOSTRegulatoryAct(BaseCitationStyle):
         logger.info('Форматирование нормативного акта "%s" ...', self.data.full_name)
 
         return self.template.substitute(
-            act_type=self.data.act_type,
             full_name=self.data.full_name,
             acception_date=self.data.acception_date,
             act_No=self.data.act_No,
             publishing_source=self.data.publishing_source,
-            year=self.data.year,
-            source_No=self.data.source_No,
-            article_No=self.data.article_No,
-            amended_from=self.data.amended_from,
         )
 
 
-class GOSTInternetResource(BaseCitationStyle):
+class MLAInternetResource(BaseCitationStyle):
     """
     Форматирование для интернет-ресурсов.
     """
@@ -133,7 +129,7 @@ class GOSTInternetResource(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$article // $website URL: $link (дата обращения: $access_date)."
+            '"$article." $website, $link. Accessed $access_date.'
         )
 
     def substitute(self) -> str:
@@ -148,7 +144,7 @@ class GOSTInternetResource(BaseCitationStyle):
         )
 
 
-class GOSTCollectionArticle(BaseCitationStyle):
+class MLACollectionArticle(BaseCitationStyle):
     """
     Форматирование для статьи из сборника.
     """
@@ -158,7 +154,7 @@ class GOSTCollectionArticle(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$authors $article_title // $collection_title. – $city: $publishing_house, $year. – С. $pages."
+            '$authors. "$article_title." $collection_title, $publishing_house, $year, pp. $pages.'
         )
 
     def substitute(self) -> str:
@@ -169,24 +165,23 @@ class GOSTCollectionArticle(BaseCitationStyle):
             authors=self.data.authors,
             article_title=self.data.article_title,
             collection_title=self.data.collection_title,
-            city=self.data.city,
             publishing_house=self.data.publishing_house,
             year=self.data.year,
             pages=self.data.pages,
         )
 
 
-class GOSTCitationFormatter:
+class MLACitationFormatter:
     """
     Базовый класс для итогового форматирования списка источников.
     """
 
     formatters_map = {
-        BookModel.__name__: GOSTBook,
-        InternetResourceModel.__name__: GOSTInternetResource,
-        ArticlesCollectionModel.__name__: GOSTCollectionArticle,
-        RegulatoryActModel.__name__: GOSTRegulatoryAct,
-        ArticleModel.__name__: GOSTArticle,
+        BookModel.__name__: MLABook,
+        InternetResourceModel.__name__: MLAInternetResource,
+        ArticlesCollectionModel.__name__: MLACollectionArticle,
+        RegulatoryActModel.__name__: MLARegulatoryAct,
+        ArticleModel.__name__: MLAArticle,
     }
 
     def __init__(self, models: list[BaseModel]) -> None:
