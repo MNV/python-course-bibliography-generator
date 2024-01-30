@@ -33,6 +33,36 @@ class BookModel(BaseModel):
     pages: int = Field(..., gt=0)
 
 
+class RegulatoryActModel(BaseModel):
+    """
+    Модель нормативного акта:
+
+    .. code-block::
+
+        RegulatoryActModel(
+            act_type="Конституция Российской Федерации",
+            full_name="Наука как искусство",
+            acception_date="01.01.2021",
+            act_No="1234-56",
+            publishing_source="Парламентская газета",
+            year=2020,
+            source_No=5,
+            article_No=15,
+            amended_from="01.01.2021",
+        )
+    """
+
+    act_type: str
+    full_name: str
+    acception_date: str
+    act_No: str
+    publishing_source: str
+    year: int = Field(..., gt=0)
+    source_No: int = Field(..., gt=0)
+    article_No:  int = Field(..., gt=0)
+    amended_from : str
+
+
 class InternetResourceModel(BaseModel):
     """
     Модель интернет ресурса:

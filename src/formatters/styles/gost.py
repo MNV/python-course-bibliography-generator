@@ -5,7 +5,7 @@ from string import Template
 
 from pydantic import BaseModel
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
+from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, RegulatoryActModel
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
 
@@ -48,6 +48,36 @@ class GOSTBook(BaseCitationStyle):
         """
 
         return f"{self.data.edition} изд. – " if self.data.edition else ""
+
+
+class GOSTRegulatoryAct(BaseCitationStyle):
+    """
+    Форматирование для книг.
+    """
+
+    data: RegulatoryActModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            '$act_type "$full_name" от $acception_date №$act_No // $publishing_source, $year. – №$source_No – Ст. $article_No с изм. и допол. в ред. от $amended_from.'
+        )
+
+    def substitute(self) -> str:
+
+        logger.info('Форматирование нормативного акта "%s" ...', self.data.full_name)
+
+        return self.template.substitute(
+            act_type=self.data.act_type,
+            full_name=self.data.full_name,
+            acception_date=self.data.acception_date,
+            act_No=self.data.act_No,
+            publishing_source=self.data.publishing_source,
+            year=self.data.year,
+            source_No=self.data.source_No,
+            article_No=self.data.article_No,
+            amended_from=self.data.amended_from,
+        )
 
 
 class GOSTInternetResource(BaseCitationStyle):
@@ -112,6 +142,7 @@ class GOSTCitationFormatter:
         BookModel.__name__: GOSTBook,
         InternetResourceModel.__name__: GOSTInternetResource,
         ArticlesCollectionModel.__name__: GOSTCollectionArticle,
+        RegulatoryActModel.__name__: GOSTRegulatoryAct,
     }
 
     def __init__(self, models: list[BaseModel]) -> None:
