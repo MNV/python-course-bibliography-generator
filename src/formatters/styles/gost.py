@@ -5,7 +5,13 @@ from string import Template
 
 from pydantic import BaseModel
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, NormativeActModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    NormativeActModel,
+    JournalArticleModel,
+)
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
 
@@ -13,10 +19,39 @@ from logger import get_logger
 logger = get_logger(__name__)
 
 
+class GOSTJournalArticle(BaseCitationStyle):
+    """
+    Форматирование для статей из журналов.
+    """
+
+    data: JournalArticleModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$authors $article_title // $journal_name. $publication_year. № $journal_number, С. $pages."
+        )
+
+    def substitute(self) -> str:
+
+        logger.info(
+            'Форматирование статьи из журнала "%s" ...', self.data.article_title
+        )
+        return self.template.substitute(
+            authors=self.data.authors,
+            article_title=self.data.article_title,
+            journal_name=self.data.journal_name,
+            publication_year=self.data.publication_year,
+            journal_number=self.data.journal_number,
+            pages=self.data.pages,
+        )
+
+
 class GOSTNormativeAct(BaseCitationStyle):
     """
     Форматирование для законов и нормативных актов.
     """
+
     data: NormativeActModel
 
     @property
@@ -150,6 +185,7 @@ class GOSTCitationFormatter:
         InternetResourceModel.__name__: GOSTInternetResource,
         ArticlesCollectionModel.__name__: GOSTCollectionArticle,
         NormativeActModel.__name__: GOSTNormativeAct,
+        JournalArticleModel.__name__: GOSTJournalArticle,
     }
 
     def __init__(self, models: list[BaseModel]) -> None:

@@ -7,7 +7,49 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
+class JournalArticleModel(BaseModel):
+    """
+    Модель статьи из журнала:
+
+    .. code-block::
+
+        JournalArticleModel(
+            authors="Анохин Н. В., Протас Н. Г., Шмаков Е. К.",
+            article_title="ИИС – шаг вперед, дающий рывок в будущее",
+            journal_name="Идеи и идеалы",
+            publication_year=2021,
+            journal_number=3,
+            pages="266-280",
+        )
+    """
+
+    authors: str
+    article_title: str
+    journal_name: str
+    publication_year: int = Field(..., gt=0)
+    journal_number: int
+    pages: str
+
+
 class NormativeActModel(BaseModel):
+    """
+    Модель нормативного акта, закона:
+
+    .. code-block::
+
+        NormativeActModel(
+            type="Федеральный закон Российской Федерации",
+            title="О персональных данных",
+            adoption_date="27.07.2006",
+            act_numer="152-ФЗ",
+            source="Собрание законодательства Российской Федерации",
+            publication_year=2006,
+            source_number=29,
+            article_number=5233,
+            revision="06.02.2023",
+        )
+    """
+
     type: str
     title: str
     adoption_date: str
