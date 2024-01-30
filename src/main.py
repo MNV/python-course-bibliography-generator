@@ -80,11 +80,12 @@ def process_input(
 
     models = SourcesReader(path_input).read()
     formatted_models = ()
+    click.echo(citation)
     if citation == CitationEnum.MLA.name:
         formatted_models = tuple(
             str(item) for item in MLACitationFormatter(models).format()
         )
-    if citation == CitationEnum.APA.name:
+    elif citation == CitationEnum.APA.name:
         formatted_models = tuple(
             str(item) for item in APACitationFormatter(models).format()
         )
