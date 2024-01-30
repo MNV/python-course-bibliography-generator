@@ -7,6 +7,7 @@ import click
 
 from formatters.styles.gost import GOSTCitationFormatter
 from formatters.styles.mla import MLACitationFormatter
+from formatters.styles.apa import APACitationFormatter
 from logger import get_logger
 from readers.reader import SourcesReader
 from renderer import Renderer
@@ -82,6 +83,10 @@ def process_input(
     if citation == CitationEnum.MLA.name:
         formatted_models = tuple(
             str(item) for item in MLACitationFormatter(models).format()
+        )
+    if citation == CitationEnum.APA.name:
+        formatted_models = tuple(
+            str(item) for item in APACitationFormatter(models).format()
         )
     else :
         formatted_models = tuple(

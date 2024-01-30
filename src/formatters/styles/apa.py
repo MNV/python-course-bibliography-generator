@@ -1,5 +1,5 @@
 """
-Стиль цитирования по MLA.
+Стиль цитирования по APA 7.
 """
 from string import Template
 
@@ -13,7 +13,7 @@ from logger import get_logger
 logger = get_logger(__name__)
 
 
-class MLABook(BaseCitationStyle):
+class APABook(BaseCitationStyle):
     """
     Форматирование для книг.
     """
@@ -23,7 +23,7 @@ class MLABook(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$authors $title. $edition$city: $publishing_house, $year."
+            "$authors. ($year). $title$edition. $publishing_house."
         )
 
     def substitute(self) -> str:
@@ -56,11 +56,11 @@ class MLABook(BaseCitationStyle):
                 res = f"{ed}nd"           
             elif ed % 10 == 3:      
                 res = f"{ed}rd"         
-            return f"{res} ed., "
+            return f" ({res} ed.)"
         return ""
 
 
-class MLAArticle(BaseCitationStyle):
+class APAArticle(BaseCitationStyle):
     """
     Форматирование для статьи журнала.
     """
@@ -70,7 +70,7 @@ class MLAArticle(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            '$authors "$title." $journal_name, no. $No, $year, pp. $pages.'
+            '$authors ($year). $title. $journal_name. ($No), $pages.'
         )
 
     def substitute(self) -> str:
@@ -93,7 +93,7 @@ class MLAArticle(BaseCitationStyle):
         )
 
 
-class MLARegulatoryAct(BaseCitationStyle):
+class APARegulatoryAct(BaseCitationStyle):
     """
     Форматирование для нормативного акта.
     """
@@ -103,7 +103,7 @@ class MLARegulatoryAct(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            '$full_name. Pub L. $act_No. $acception_date. $publishing_source.'
+            '$full_name, $act_No $publishing_source. § $article_No ($year).'
         )
 
     def substitute(self) -> str:
@@ -112,13 +112,14 @@ class MLARegulatoryAct(BaseCitationStyle):
 
         return self.template.substitute(
             full_name=self.data.full_name,
-            acception_date=self.data.acception_date,
-            act_No=self.data.act_No,
             publishing_source=self.data.publishing_source,
+            act_No=self.data.act_No,
+            article_No=self.data.article_No,
+            year=self.data.year,
         )
 
 
-class MLAInternetResource(BaseCitationStyle):
+class APAInternetResource(BaseCitationStyle):
     """
     Форматирование для интернет-ресурсов.
     """
@@ -128,7 +129,7 @@ class MLAInternetResource(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            '"$article." $website, $link. Accessed $access_date.'
+            '$article. $website. (n.d.). $link'
         )
 
     def substitute(self) -> str:
@@ -139,11 +140,10 @@ class MLAInternetResource(BaseCitationStyle):
             article=self.data.article,
             website=self.data.website,
             link=self.data.link,
-            access_date=self.data.access_date,
         )
 
 
-class MLACollectionArticle(BaseCitationStyle):
+class APACollectionArticle(BaseCitationStyle):
     """
     Форматирование для статьи из сборника.
     """
@@ -153,7 +153,7 @@ class MLACollectionArticle(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            '$authors "$article_title." $collection_title, $publishing_house, $year, pp. $pages.'
+            '$authors ($year). $article_title, $collection_title. (pp. $pages). $publishing_house.'
         )
 
     def substitute(self) -> str:
@@ -170,17 +170,17 @@ class MLACollectionArticle(BaseCitationStyle):
         )
 
 
-class MLACitationFormatter:
+class APACitationFormatter:
     """
     Базовый класс для итогового форматирования списка источников.
     """
 
     formatters_map = {
-        BookModel.__name__: MLABook,
-        InternetResourceModel.__name__: MLAInternetResource,
-        ArticlesCollectionModel.__name__: MLACollectionArticle,
-        RegulatoryActModel.__name__: MLARegulatoryAct,
-        ArticleModel.__name__: MLAArticle,
+        BookModel.__name__: APABook,
+        InternetResourceModel.__name__: APAInternetResource,
+        ArticlesCollectionModel.__name__: APACollectionArticle,
+        RegulatoryActModel.__name__: APARegulatoryAct,
+        ArticleModel.__name__: APAArticle,
     }
 
     def __init__(self, models: list[BaseModel]) -> None:

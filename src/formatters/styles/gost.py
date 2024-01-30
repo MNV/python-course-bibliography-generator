@@ -52,7 +52,7 @@ class GOSTBook(BaseCitationStyle):
 
 class GOSTArticle(BaseCitationStyle):
     """
-    Форматирование для книг.
+    Форматирование для статьи журнала.
     """
 
     data: ArticleModel
