@@ -3,8 +3,7 @@
 """
 from string import Template
 
-from pydantic import BaseModel
-
+from formatters.base import BaseCitationFormatter
 from formatters.models import (
     BookModel,
     InternetResourceModel,
@@ -175,9 +174,9 @@ class GOSTCollectionArticle(BaseCitationStyle):
         )
 
 
-class GOSTCitationFormatter:
+class GOSTCitationFormatter(BaseCitationFormatter):
     """
-    Базовый класс для итогового форматирования списка источников.
+    Класс для итогового форматирования списка источников по ГОСТ.
     """
 
     formatters_map = {
@@ -188,24 +187,3 @@ class GOSTCitationFormatter:
         JournalArticleModel.__name__: GOSTJournalArticle,
     }
 
-    def __init__(self, models: list[BaseModel]) -> None:
-        """
-        Конструктор.
-
-        :param models: Список объектов для форматирования
-        """
-
-        formatted_items = []
-        for model in models:
-            formatted_items.append(self.formatters_map.get(type(model).__name__)(model))  # type: ignore
-
-        self.formatted_items = formatted_items
-
-    def format(self) -> list[BaseCitationStyle]:
-        """
-        Форматирование списка источников.
-
-        :return:
-        """
-
-        return sorted(self.formatted_items, key=lambda item: item.formatted)
