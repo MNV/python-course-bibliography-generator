@@ -1,11 +1,11 @@
 """
-Стиль цитирования APA.
+Стиль цитирования APA 7.
 """
 from string import Template
 
 from formatters.models import (
     InternetResourceModel,
-    JournalArticleModel,
+    JournalArticleModel, NormativeActModel, BookModel, ArticlesCollectionModel,
 )
 from formatters.base import BaseCitationFormatter
 from formatters.styles.base import BaseCitationStyle
@@ -42,6 +42,43 @@ class APAJournalArticle(BaseCitationStyle):
         )
 
 
+class APANormativeAct(BaseCitationStyle):
+    """
+    Форматирование для законов и нормативных актов.
+    """
+
+    data: NormativeActModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$title, $type No. $act_numer, Stat. $article_number ($adoption_date)."
+        )
+
+    def substitute(self) -> str:
+
+        logger.info('Форматирование нормативного акта "%s" ...', self.data.title)
+        return self.template.substitute(
+            type=self.data.type,
+            title=self.data.title,
+            adoption_date=self.data.adoption_date,
+            act_numer=self.data.act_numer,
+            source=self.data.source,
+            publication_year=self.data.publication_year,
+            source_number=self.data.source_number,
+            article_number=self.data.article_number,
+            revision=self.get_revision_date(),
+        )
+
+    def get_revision_date(self) -> str:
+        """
+        Получение отформатированной информации о дате редактуры.
+
+        :return: Информация о дате редакции.
+        """
+        return f"в ред. от {self.data.revision}" if self.data.revision else ""
+
+
 class APAInternetResource(BaseCitationStyle):
     """
     Форматирование для интернет-ресурсов.
@@ -67,6 +104,57 @@ class APAInternetResource(BaseCitationStyle):
         )
 
 
+class APABook(BaseCitationStyle):
+    """
+    Форматирование для книг.
+    """
+
+    data: BookModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$authors ($year). $title. $publishing_house."
+        )
+
+    def substitute(self) -> str:
+
+        logger.info('Форматирование книги "%s" ...', self.data.title)
+
+        return self.template.substitute(
+            authors=self.data.authors,
+            title=self.data.title,
+            publishing_house=self.data.publishing_house,
+            year=self.data.year,
+        )
+
+
+class APACollectionArticle(BaseCitationStyle):
+    """
+    Форматирование для статьи из сборника.
+    """
+
+    data: ArticlesCollectionModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$authors ($year). $article_title. $collection_title, $pages."
+        )
+
+    def substitute(self) -> str:
+
+        logger.info('Форматирование сборника статей "%s" ...', self.data.article_title)
+
+        return self.template.substitute(
+            authors=self.data.authors,
+            article_title=self.data.article_title,
+            collection_title=self.data.collection_title,
+            year=self.data.year,
+            pages=self.data.pages,
+        )
+
+
 class APACitationFormatter(BaseCitationFormatter):
     """
     Класс для итогового форматирования списка источников по APA 7.
@@ -75,4 +163,7 @@ class APACitationFormatter(BaseCitationFormatter):
     formatters_map = {
         InternetResourceModel.__name__: APAInternetResource,
         JournalArticleModel.__name__: APAJournalArticle,
+        BookModel.__name__: APABook,
+        ArticlesCollectionModel.__name__: APACollectionArticle,
+        NormativeActModel.__name__: APANormativeAct,
     }
