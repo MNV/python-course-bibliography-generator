@@ -3,11 +3,15 @@
 """
 from string import Template
 
+from pydantic import BaseModel
+
 from formatters.models import (
     InternetResourceModel,
-    JournalArticleModel, NormativeActModel, BookModel, ArticlesCollectionModel,
+    JournalArticleModel,
+    NormativeActModel,
+    BookModel,
+    ArticlesCollectionModel,
 )
-from formatters.base import BaseCitationFormatter
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
 
@@ -113,9 +117,7 @@ class APABook(BaseCitationStyle):
 
     @property
     def template(self) -> Template:
-        return Template(
-            "$authors ($year). $title. $publishing_house."
-        )
+        return Template("$authors ($year). $title. $publishing_house.")
 
     def substitute(self) -> str:
 
@@ -138,9 +140,7 @@ class APACollectionArticle(BaseCitationStyle):
 
     @property
     def template(self) -> Template:
-        return Template(
-            "$authors ($year). $article_title. $collection_title, $pages."
-        )
+        return Template("$authors ($year). $article_title. $collection_title, $pages.")
 
     def substitute(self) -> str:
 
@@ -155,7 +155,7 @@ class APACollectionArticle(BaseCitationStyle):
         )
 
 
-class APACitationFormatter(BaseCitationFormatter):
+class APACitationFormatter:
     """
     Класс для итогового форматирования списка источников по APA 7.
     """
@@ -167,3 +167,25 @@ class APACitationFormatter(BaseCitationFormatter):
         ArticlesCollectionModel.__name__: APACollectionArticle,
         NormativeActModel.__name__: APANormativeAct,
     }
+
+    def __init__(self, models: list[BaseModel]) -> None:
+        """
+        Конструктор.
+
+        :param models: Список объектов для форматирования
+        """
+
+        formatted_items = []
+        for model in models:
+            formatted_items.append(self.formatters_map.get(type(model).__name__)(model))  # type: ignore
+
+        self.formatted_items = formatted_items
+
+    def format(self) -> list[BaseCitationStyle]:
+        """
+        Форматирование списка источников.
+
+        :return:
+        """
+
+        return sorted(self.formatted_items, key=lambda item: item.formatted)
