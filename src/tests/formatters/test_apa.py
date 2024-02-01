@@ -75,7 +75,7 @@ class TestAPA:
 
     def test_articles(self, articles_model_fixture: ArticleModel) -> None:
         """
-        Тестирование форматирования сборника статей.
+        Тестирование форматирования статей.
 
         :param ArticlesModel articles_model_fixture: Фикстура модели статей
         :return:
@@ -92,7 +92,7 @@ class TestAPA:
         self, regulatory_act_model_fixture: RegulatoryActModel
     ) -> None:
         """
-        Тестирование форматирования сборника статей.
+        Тестирование форматирования нормативных актов.
 
         :param RegulatoryActModel regulatory_act_model_fixture: Фикстура модели сборника нормативных актов
         :return:
