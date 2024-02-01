@@ -5,12 +5,14 @@ from typing import Any
 
 import pytest
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
+from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, ArticleModel, RegulatoryActModel
 from readers.reader import (
     BookReader,
     SourcesReader,
     InternetResourceReader,
     ArticlesCollectionReader,
+    RegulatoryActReader,
+    ArticleReader
 )
 from settings import TEMPLATE_FILE_PATH
 
@@ -104,6 +106,60 @@ class TestReaders:
         # проверка общего количества атрибутов
         assert len(model_type.schema().get("properties", {}).keys()) == 7
 
+    def test_articles(self, workbook: Any) -> None:
+        """
+        Тестирование чтения статей.
+
+        :param workbook: Объект тестовой рабочей книги.
+        """
+
+        models = ArticleReader(workbook).read()
+
+        assert len(models) == 1
+        model = models[0]
+
+        model_type = ArticleModel
+
+        assert isinstance(model, model_type)
+        assert model.authors == "Иванов И.М., Петров С.Н."
+        assert model.title == "Наука как искусство"
+        assert model.journal_name == "Образование и наука"
+        assert model.year == 2020
+        assert model.No == 10
+        assert model.pages == "25-30"
+
+        # проверка общего количества атрибутов
+        assert len(model_type.schema().get("properties", {}).keys()) == 6
+
+    def test_regulatory_act(self, workbook: Any) -> None:
+        """
+        Тестирование чтения нормативных актов.
+
+        :param workbook: Объект тестовой рабочей книги.
+        """
+
+        models = RegulatoryActReader(workbook).read()
+
+        assert len(models) == 1
+        model = models[0]
+
+        model_type = RegulatoryActModel
+
+        assert isinstance(model, model_type)
+        assert model.act_type == "Конституция Российской Федерации"
+        assert model.full_name == "Наука как искусство"
+        assert model.acception_date == "01.01.2000"
+        assert model.act_No == "1234-56"
+        assert model.publishing_source == "Парламентская газета"
+        assert model.year == 2020
+        assert model.source_No == 5
+        assert model.article_No == 15
+        assert model.amended_from == "11.09.2002"
+
+        # проверка общего количества атрибутов
+        assert len(model_type.schema().get("properties", {}).keys()) == 9
+
+
     def test_sources_reader(self) -> None:
         """
         Тестирование функции чтения всех моделей из источника.
@@ -111,7 +167,7 @@ class TestReaders:
 
         models = SourcesReader(TEMPLATE_FILE_PATH).read()
         # проверка общего считанного количества моделей
-        assert len(models) == 8
+        assert len(models) == 10
 
         # проверка наличия всех ожидаемых типов моделей среди типов считанных моделей
         model_types = {model.__class__.__name__ for model in models}
@@ -119,4 +175,6 @@ class TestReaders:
             BookModel.__name__,
             InternetResourceModel.__name__,
             ArticlesCollectionModel.__name__,
+            ArticleModel.__name__,
+            RegulatoryActModel.__name__
         }
