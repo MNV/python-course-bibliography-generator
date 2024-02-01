@@ -6,6 +6,8 @@ The application allows you to automate the process of generating a bibliography 
 
 Supported citation styles:
 - ГОСТ Р 7.0.5-2008 
+- MLA 9
+- APA 7
 
 ## Installation
 
@@ -57,6 +59,11 @@ to fill it without changing the original template:
     docker compose run app python main.py --citation gost --path_input /media/input.xlsx --path_output /media/output.docx
     ```
    
+   To change formatting style set `--citation` to one of the following values:
+   - `gost` for ГОСТ Р 7.0.5-2008 formatting
+   - `mla` for MLA 9 formatting
+   - `apa` for APA 7 formatting
+
    Also, it is possible to omit the arguments to use their defaults:
     ```shell
     docker compose run app python main.py
