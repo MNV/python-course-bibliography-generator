@@ -49,7 +49,7 @@ class BookReader(BaseReader):
 
 class ArticleReader(BaseReader):
     """
-    Чтение модели книги.
+    Чтение модели статей.
     """
 
     @property
