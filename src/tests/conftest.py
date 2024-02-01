@@ -70,9 +70,9 @@ def articles_model_fixture() -> ArticleModel:
 
     return ArticleModel(
         authors="Иванов И.М., Петров С.Н.",
-        article_title="Наука как искусство",
-        journal_name="Сборник научных трудов",
-        No=2020,
+        title="Наука как искусство",
+        journal_name="Образование и наука",
+        No=10,
         year=2020,
         pages="25-30",
     )
