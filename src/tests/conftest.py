@@ -61,7 +61,7 @@ def articles_collection_model_fixture() -> ArticlesCollectionModel:
 
 
 @pytest.fixture
-def articles_collection_model_fixture() -> ArticleModel:
+def articles_model_fixture() -> ArticleModel:
     """
     Фикстура модели статьи из журнала.
 
@@ -78,7 +78,7 @@ def articles_collection_model_fixture() -> ArticleModel:
     )
 
 @pytest.fixture
-def articles_collection_model_fixture() -> RegulatoryActModel:
+def redulstory_act_model_fixture() -> RegulatoryActModel:
     """
     Фикстура модели нормативного актв.
 
