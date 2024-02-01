@@ -78,7 +78,7 @@ def articles_model_fixture() -> ArticleModel:
     )
 
 @pytest.fixture
-def redulstory_act_model_fixture() -> RegulatoryActModel:
+def regulatory_act_model_fixture() -> RegulatoryActModel:
     """
     Фикстура модели нормативного актв.
 
