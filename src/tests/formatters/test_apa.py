@@ -3,8 +3,20 @@
 """
 
 from formatters.base import BaseCitationFormatter
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, RegulatoryActModel, ArticleModel
-from formatters.styles.apa import APABook, APAInternetResource, APACollectionArticle, APARegulatoryAct, APAArticle
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    RegulatoryActModel,
+    ArticleModel,
+)
+from formatters.styles.apa import (
+    APABook,
+    APAInternetResource,
+    APACollectionArticle,
+    APARegulatoryAct,
+    APAArticle,
+)
 
 
 class TestAPA:
@@ -41,7 +53,7 @@ class TestAPA:
 
         assert (
             model.formatted
-            == 'Наука как искусство. Ведомости. (n.d.). https://www.vedomosti.ru'
+            == "Наука как искусство. Ведомости. (n.d.). https://www.vedomosti.ru"
         )
 
     def test_articles_collection(
@@ -58,12 +70,10 @@ class TestAPA:
 
         assert (
             model.formatted
-            == 'Иванов И.М., Петров С.Н. (2020). Наука как искусство, Сборник научных трудов. (pp. 25-30). АСТ.'
+            == "Иванов И.М., Петров С.Н. (2020). Наука как искусство, Сборник научных трудов. (pp. 25-30). АСТ."
         )
 
-    def test_articles(
-        self, articles_model_fixture: ArticleModel
-    ) -> None:
+    def test_articles(self, articles_model_fixture: ArticleModel) -> None:
         """
         Тестирование форматирования сборника статей.
 
@@ -75,7 +85,7 @@ class TestAPA:
 
         assert (
             model.formatted
-            == 'Иванов И.М. and  Петров С.Н. (2020). Наука как искусство. Образование и наука. (10), 25-30.'
+            == "Иванов И.М. and  Петров С.Н. (2020). Наука как искусство. Образование и наука. (10), 25-30."
         )
 
     def test_regulatory_act(
@@ -92,7 +102,7 @@ class TestAPA:
 
         assert (
             model.formatted
-            == 'Наука как искусство, 1234-56 Парламентская газета. § 15 (2020).'
+            == "Наука как искусство, 1234-56 Парламентская газета. § 15 (2020)."
         )
 
     def test_citation_formatter(
@@ -101,7 +111,7 @@ class TestAPA:
         internet_resource_model_fixture: InternetResourceModel,
         articles_collection_model_fixture: ArticlesCollectionModel,
         articles_model_fixture: ArticleModel,
-        regulatory_act_model_fixture: RegulatoryActModel
+        regulatory_act_model_fixture: RegulatoryActModel,
     ) -> None:
         """
         Тестирование функции итогового форматирования списка источников.
@@ -117,7 +127,7 @@ class TestAPA:
             APAInternetResource(internet_resource_model_fixture),
             APACollectionArticle(articles_collection_model_fixture),
             APAArticle(articles_model_fixture),
-            APARegulatoryAct(regulatory_act_model_fixture)
+            APARegulatoryAct(regulatory_act_model_fixture),
         ]
         result = BaseCitationFormatter(models).format()
 

@@ -3,7 +3,13 @@
 """
 import pytest
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, RegulatoryActModel, ArticleModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    RegulatoryActModel,
+    ArticleModel,
+)
 
 
 @pytest.fixture
@@ -77,6 +83,7 @@ def articles_model_fixture() -> ArticleModel:
         pages="25-30",
     )
 
+
 @pytest.fixture
 def regulatory_act_model_fixture() -> RegulatoryActModel:
     """
@@ -94,5 +101,5 @@ def regulatory_act_model_fixture() -> RegulatoryActModel:
         year=2020,
         source_No=5,
         article_No=15,
-        amended_from="11.09.2002"
+        amended_from="11.09.2002",
     )

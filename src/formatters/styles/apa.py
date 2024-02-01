@@ -5,7 +5,13 @@ from string import Template
 
 from pydantic import BaseModel
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, RegulatoryActModel, ArticleModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    RegulatoryActModel,
+    ArticleModel,
+)
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
 
@@ -22,9 +28,7 @@ class APABook(BaseCitationStyle):
 
     @property
     def template(self) -> Template:
-        return Template(
-            "$authors. ($year). $title$edition. $publishing_house."
-        )
+        return Template("$authors. ($year). $title$edition. $publishing_house.")
 
     def substitute(self) -> str:
 
@@ -46,16 +50,16 @@ class APABook(BaseCitationStyle):
         :return: Информация об издательстве.
         """
         if self.data.edition:
-            ed = int(self.data.edition.split("-")[0])
-            res = f"{ed}th"
-            if  10 <= ed % 100 <=19:
-                res = f"{ed}th"
-            elif ed % 10 == 1:         
-                res = f"{ed}st"       
-            elif ed % 10 == 2:     
-                res = f"{ed}nd"           
-            elif ed % 10 == 3:      
-                res = f"{ed}rd"         
+            edition = int(self.data.edition.split("-")[0])
+            res = f"{edition}th"
+            if 10 <= edition % 100 <= 19:
+                res = f"{edition}th"
+            elif edition % 10 == 1:
+                res = f"{edition}st"
+            elif edition % 10 == 2:
+                res = f"{edition}nd"
+            elif edition % 10 == 3:
+                res = f"{edition}rd"
             return f" ({res} ed.)"
         return ""
 
@@ -69,9 +73,7 @@ class APAArticle(BaseCitationStyle):
 
     @property
     def template(self) -> Template:
-        return Template(
-            '$authors ($year). $title. $journal_name. ($No), $pages.'
-        )
+        return Template("$authors ($year). $title. $journal_name. ($No), $pages.")
 
     def substitute(self) -> str:
 
@@ -103,7 +105,7 @@ class APARegulatoryAct(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            '$full_name, $act_No $publishing_source. § $article_No ($year).'
+            "$full_name, $act_No $publishing_source. § $article_No ($year)."
         )
 
     def substitute(self) -> str:
@@ -128,9 +130,7 @@ class APAInternetResource(BaseCitationStyle):
 
     @property
     def template(self) -> Template:
-        return Template(
-            '$article. $website. (n.d.). $link'
-        )
+        return Template("$article. $website. (n.d.). $link")
 
     def substitute(self) -> str:
 
@@ -153,7 +153,7 @@ class APACollectionArticle(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            '$authors ($year). $article_title, $collection_title. (pp. $pages). $publishing_house.'
+            "$authors ($year). $article_title, $collection_title. (pp. $pages). $publishing_house."
         )
 
     def substitute(self) -> str:

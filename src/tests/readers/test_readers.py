@@ -5,14 +5,20 @@ from typing import Any
 
 import pytest
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, ArticleModel, RegulatoryActModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    ArticleModel,
+    RegulatoryActModel,
+)
 from readers.reader import (
     BookReader,
     SourcesReader,
     InternetResourceReader,
     ArticlesCollectionReader,
     RegulatoryActReader,
-    ArticleReader
+    ArticleReader,
 )
 from settings import TEMPLATE_FILE_PATH
 
@@ -159,7 +165,6 @@ class TestReaders:
         # проверка общего количества атрибутов
         assert len(model_type.schema().get("properties", {}).keys()) == 9
 
-
     def test_sources_reader(self) -> None:
         """
         Тестирование функции чтения всех моделей из источника.
@@ -176,5 +181,5 @@ class TestReaders:
             InternetResourceModel.__name__,
             ArticlesCollectionModel.__name__,
             ArticleModel.__name__,
-            RegulatoryActModel.__name__
+            RegulatoryActModel.__name__,
         }

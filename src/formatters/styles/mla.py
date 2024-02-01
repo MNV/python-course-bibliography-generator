@@ -5,7 +5,13 @@ from string import Template
 
 from pydantic import BaseModel
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, RegulatoryActModel, ArticleModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    RegulatoryActModel,
+    ArticleModel,
+)
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
 
@@ -22,9 +28,7 @@ class MLABook(BaseCitationStyle):
 
     @property
     def template(self) -> Template:
-        return Template(
-            "$authors $title. $edition$city: $publishing_house, $year."
-        )
+        return Template("$authors $title. $edition$city: $publishing_house, $year.")
 
     def substitute(self) -> str:
 
@@ -46,16 +50,16 @@ class MLABook(BaseCitationStyle):
         :return: Информация об издательстве.
         """
         if self.data.edition:
-            ed = int(self.data.edition.split("-")[0])
-            res = f"{ed}th"
-            if  10 <= ed % 100 <=19:
-                res = f"{ed}th"
-            elif ed % 10 == 1:         
-                res = f"{ed}st"       
-            elif ed % 10 == 2:     
-                res = f"{ed}nd"           
-            elif ed % 10 == 3:      
-                res = f"{ed}rd"         
+            edition = int(self.data.edition.split("-")[0])
+            res = f"{edition}th"
+            if 10 <= edition % 100 <= 19:
+                res = f"{edition}th"
+            elif edition % 10 == 1:
+                res = f"{edition}st"
+            elif edition % 10 == 2:
+                res = f"{edition}nd"
+            elif edition % 10 == 3:
+                res = f"{edition}rd"
             return f"{res} ed., "
         return ""
 
@@ -69,9 +73,7 @@ class MLAArticle(BaseCitationStyle):
 
     @property
     def template(self) -> Template:
-        return Template(
-            '$authors "$title." $journal_name, no. $No, $year, pp. $pages.'
-        )
+        return Template('$authors "$title." $journal_name, no. $No, $year, pp. $pages.')
 
     def substitute(self) -> str:
 
@@ -103,7 +105,7 @@ class MLARegulatoryAct(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            '$full_name. Pub L. $act_No. $acception_date. $publishing_source.'
+            "$full_name. Pub L. $act_No. $acception_date. $publishing_source."
         )
 
     def substitute(self) -> str:
@@ -127,9 +129,7 @@ class MLAInternetResource(BaseCitationStyle):
 
     @property
     def template(self) -> Template:
-        return Template(
-            '"$article." $website, $link. Accessed $access_date.'
-        )
+        return Template('"$article." $website, $link. Accessed $access_date.')
 
     def substitute(self) -> str:
 

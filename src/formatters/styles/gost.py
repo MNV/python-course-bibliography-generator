@@ -5,7 +5,13 @@ from string import Template
 
 from pydantic import BaseModel
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, RegulatoryActModel, ArticleModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    RegulatoryActModel,
+    ArticleModel,
+)
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
 
@@ -59,9 +65,7 @@ class GOSTArticle(BaseCitationStyle):
 
     @property
     def template(self) -> Template:
-        return Template(
-            "$authors $title // $journal_name. $year. №$No. С. $pages."
-        )
+        return Template("$authors $title // $journal_name. $year. №$No. С. $pages.")
 
     @property
     def template_many_authors(self) -> Template:
@@ -103,7 +107,8 @@ class GOSTRegulatoryAct(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            '$act_type "$full_name" от $acception_date №$act_No // $publishing_source, $year. – №$source_No – Ст. $article_No с изм. и допол. в ред. от $amended_from.'
+            '$act_type "$full_name" от $acception_date №$act_No // $publishing_source, $year. – №$source_No – Ст. \
+$article_No с изм. и допол. в ред. от $amended_from.'
         )
 
     def substitute(self) -> str:

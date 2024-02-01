@@ -7,7 +7,13 @@ from typing import Type
 import openpyxl
 from openpyxl.workbook import Workbook
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, RegulatoryActModel, ArticleModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    RegulatoryActModel,
+    ArticleModel,
+)
 from logger import get_logger
 from readers.base import BaseReader
 
@@ -39,6 +45,7 @@ class BookReader(BaseReader):
             "year": {5: int},
             "pages": {6: int},
         }
+
 
 class ArticleReader(BaseReader):
     """

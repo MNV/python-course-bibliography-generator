@@ -5,9 +5,9 @@ from enum import Enum, unique
 
 import click
 
+from formatters.styles.apa import APACitationFormatter
 from formatters.styles.gost import GOSTCitationFormatter
 from formatters.styles.mla import MLACitationFormatter
-from formatters.styles.apa import APACitationFormatter
 from logger import get_logger
 from readers.reader import SourcesReader
 from renderer import Renderer
@@ -79,7 +79,7 @@ def process_input(
     )
 
     models = SourcesReader(path_input).read()
-    formatted_models = ()
+    formatted_models: tuple[str, ...]
     click.echo(citation)
     if citation == CitationEnum.MLA.name:
         formatted_models = tuple(
@@ -89,7 +89,7 @@ def process_input(
         formatted_models = tuple(
             str(item) for item in APACitationFormatter(models).format()
         )
-    else :
+    else:
         formatted_models = tuple(
             str(item) for item in GOSTCitationFormatter(models).format()
         )

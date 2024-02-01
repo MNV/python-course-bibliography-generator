@@ -3,8 +3,20 @@
 """
 
 from formatters.base import BaseCitationFormatter
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, RegulatoryActModel, ArticleModel
-from formatters.styles.mla import MLABook, MLAInternetResource, MLACollectionArticle, MLARegulatoryAct, MLAArticle
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    RegulatoryActModel,
+    ArticleModel,
+)
+from formatters.styles.mla import (
+    MLABook,
+    MLAInternetResource,
+    MLACollectionArticle,
+    MLARegulatoryAct,
+    MLAArticle,
+)
 
 
 class TestMLA:
@@ -61,9 +73,7 @@ class TestMLA:
             == 'Иванов И.М., Петров С.Н. "Наука как искусство." Сборник научных трудов, АСТ, 2020, pp. 25-30.'
         )
 
-    def test_articles(
-        self, articles_model_fixture: ArticleModel
-    ) -> None:
+    def test_articles(self, articles_model_fixture: ArticleModel) -> None:
         """
         Тестирование форматирования сборника статей.
 
@@ -92,7 +102,7 @@ class TestMLA:
 
         assert (
             model.formatted
-            == 'Наука как искусство. Pub L. 1234-56. 01.01.2000. Парламентская газета.'
+            == "Наука как искусство. Pub L. 1234-56. 01.01.2000. Парламентская газета."
         )
 
     def test_citation_formatter(
@@ -101,7 +111,7 @@ class TestMLA:
         internet_resource_model_fixture: InternetResourceModel,
         articles_collection_model_fixture: ArticlesCollectionModel,
         articles_model_fixture: ArticleModel,
-        regulatory_act_model_fixture: RegulatoryActModel
+        regulatory_act_model_fixture: RegulatoryActModel,
     ) -> None:
         """
         Тестирование функции итогового форматирования списка источников.
@@ -117,7 +127,7 @@ class TestMLA:
             MLAInternetResource(internet_resource_model_fixture),
             MLACollectionArticle(articles_collection_model_fixture),
             MLAArticle(articles_model_fixture),
-            MLARegulatoryAct(regulatory_act_model_fixture)
+            MLARegulatoryAct(regulatory_act_model_fixture),
         ]
         result = BaseCitationFormatter(models).format()
 

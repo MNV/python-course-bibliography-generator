@@ -3,8 +3,20 @@
 """
 
 from formatters.base import BaseCitationFormatter
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, RegulatoryActModel, ArticleModel
-from formatters.styles.gost import GOSTBook, GOSTInternetResource, GOSTCollectionArticle, GOSTRegulatoryAct, GOSTArticle
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    RegulatoryActModel,
+    ArticleModel,
+)
+from formatters.styles.gost import (
+    GOSTBook,
+    GOSTInternetResource,
+    GOSTCollectionArticle,
+    GOSTRegulatoryAct,
+    GOSTArticle,
+)
 
 
 class TestGOST:
@@ -61,9 +73,7 @@ class TestGOST:
             == "Иванов И.М., Петров С.Н. Наука как искусство // Сборник научных трудов. – СПб.: АСТ, 2020. – С. 25-30."
         )
 
-    def test_articles(
-        self, articles_model_fixture: ArticleModel
-    ) -> None:
+    def test_articles(self, articles_model_fixture: ArticleModel) -> None:
         """
         Тестирование форматирования сборника статей.
 
@@ -92,7 +102,8 @@ class TestGOST:
 
         assert (
             model.formatted
-            == 'Конституция Российской Федерации "Наука как искусство" от 01.01.2000 №1234-56 // Парламентская газета, 2020. – №5 – Ст. 15 с изм. и допол. в ред. от 11.09.2002.'
+            == 'Конституция Российской Федерации "Наука как искусство" от 01.01.2000 №1234-56 // Парламентская газета, \
+2020. – №5 – Ст. 15 с изм. и допол. в ред. от 11.09.2002.'
         )
 
     def test_citation_formatter(
@@ -101,7 +112,7 @@ class TestGOST:
         internet_resource_model_fixture: InternetResourceModel,
         articles_collection_model_fixture: ArticlesCollectionModel,
         articles_model_fixture: ArticleModel,
-        regulatory_act_model_fixture: RegulatoryActModel
+        regulatory_act_model_fixture: RegulatoryActModel,
     ) -> None:
         """
         Тестирование функции итогового форматирования списка источников.
@@ -117,7 +128,7 @@ class TestGOST:
             GOSTInternetResource(internet_resource_model_fixture),
             GOSTCollectionArticle(articles_collection_model_fixture),
             GOSTArticle(articles_model_fixture),
-            GOSTRegulatoryAct(regulatory_act_model_fixture)
+            GOSTRegulatoryAct(regulatory_act_model_fixture),
         ]
         result = BaseCitationFormatter(models).format()
 

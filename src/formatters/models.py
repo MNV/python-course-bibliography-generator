@@ -33,7 +33,6 @@ class BookModel(BaseModel):
     pages: int = Field(..., gt=0)
 
 
-
 class ArticleModel(BaseModel):
     """
     Модель статьи из журнала:
@@ -84,8 +83,8 @@ class RegulatoryActModel(BaseModel):
     publishing_source: str
     year: int = Field(..., gt=0)
     source_No: int = Field(..., gt=0)
-    article_No:  int = Field(..., gt=0)
-    amended_from : str
+    article_No: int = Field(..., gt=0)
+    amended_from: str
 
 
 class InternetResourceModel(BaseModel):
