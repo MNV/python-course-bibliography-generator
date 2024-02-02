@@ -5,6 +5,7 @@ from enum import Enum, unique
 
 import click
 
+from formatters.styles.apa import APACitationFormatter
 from formatters.styles.gost import GOSTCitationFormatter
 from logger import get_logger
 from readers.reader import SourcesReader
@@ -77,9 +78,16 @@ def process_input(
     )
 
     models = SourcesReader(path_input).read()
-    formatted_models = tuple(
-        str(item) for item in GOSTCitationFormatter(models).format()
-    )
+    formatters = {
+        CitationEnum.GOST.name: GOSTCitationFormatter,
+        CitationEnum.APA.name: APACitationFormatter,
+    }
+
+    if citation not in formatters:
+        logger.error("unsupported style")
+
+    formatter = formatters[citation]
+    formatted_models = tuple(str(item) for item in formatter(models).format())
 
     logger.info("Генерация выходного файла ...")
     Renderer(formatted_models).render(path_output)
