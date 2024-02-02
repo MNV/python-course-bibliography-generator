@@ -78,7 +78,8 @@ def process_input(
     )
 
     models = SourcesReader(path_input).read()
-    formatters = {
+
+    formatters: dict[str, type[GOSTCitationFormatter | APACitationFormatter]] = {
         CitationEnum.GOST.name: GOSTCitationFormatter,
         CitationEnum.APA.name: APACitationFormatter,
     }
