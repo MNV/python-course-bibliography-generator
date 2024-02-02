@@ -5,7 +5,13 @@ from string import Template
 
 from pydantic import BaseModel
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    NewspaperArticleModel,
+    DissertationModel,
+)
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
 
@@ -103,6 +109,62 @@ class GOSTCollectionArticle(BaseCitationStyle):
         )
 
 
+class GOSTNewspaperArticle(BaseCitationStyle):
+    """
+    Форматирование для статьи из газеты.
+    """
+
+    data: NewspaperArticleModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$authors $article_title // $newspaper_title. – $year. - $date. - №$number."
+        )
+
+    def substitute(self) -> str:
+
+        logger.info('Форматирование статьи из газеты "%s" ...', self.data.article_title)
+
+        return self.template.substitute(
+            authors=self.data.authors,
+            article_title=self.data.article_title,
+            newspaper_title=self.data.newspaper_title,
+            year=self.data.year,
+            date=self.data.date,
+            number=self.data.number,
+        )
+
+
+class GOSTDissertationModel(BaseCitationStyle):
+    """
+    Форматирование для диссертации.
+    """
+
+    data: DissertationModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$author $title: дис. ... $degree $science_field наук: $code $city $year. $page_count с."
+        )
+
+    def substitute(self) -> str:
+
+        logger.info('Форматирование диссертации "%s" ...', self.data.title)
+
+        return self.template.substitute(
+            author=self.data.author,
+            title=self.data.title,
+            degree=self.data.degree,
+            science_field=self.data.science_field,
+            code=self.data.code,
+            city=self.data.city,
+            year=self.data.year,
+            page_count=self.data.page_count,
+        )
+
+
 class GOSTCitationFormatter:
     """
     Базовый класс для итогового форматирования списка источников.
@@ -112,6 +174,8 @@ class GOSTCitationFormatter:
         BookModel.__name__: GOSTBook,
         InternetResourceModel.__name__: GOSTInternetResource,
         ArticlesCollectionModel.__name__: GOSTCollectionArticle,
+        NewspaperArticleModel.__name__: GOSTNewspaperArticle,
+        DissertationModel.__name__: GOSTDissertationModel,
     }
 
     def __init__(self, models: list[BaseModel]) -> None:
