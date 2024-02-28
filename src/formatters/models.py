@@ -78,3 +78,56 @@ class ArticlesCollectionModel(BaseModel):
     publishing_house: str
     year: int = Field(..., gt=0)
     pages: str
+
+class DissertationModel(BaseModel):
+    """
+    Модель дисссертации:
+
+    .. code-block::
+
+        DissertationModel(
+            author="Иванов И.М.",
+            title="Наука как искусство",
+            degree="д-р. / канд.",
+            branch="экон.",
+            specialty_code="01.01.01",
+            city="СПб.",
+            year=2020,
+            pages=199,
+        )
+    """
+    author: str = Field(..., description="Фамилия и инициалы автора")
+    title: str = Field(..., description="Название диссертации")
+    degree: str = Field(..., description="Ученая степень (д-р. / канд.)")
+    branch: str = Field(..., description="Отрасль наук (сокращённо)")
+    specialty_code: str = Field(..., description="Код специальности")
+    city: str = Field(..., description="Город издательства")
+    year: int = Field(..., gt=0, description="Год защиты")
+    pages: int = Field(..., gt=0, description="Количество страниц")
+
+class AbstractModel(BaseModel):
+    """
+    Модель автореферата:
+
+    .. code-block::
+
+        AbstractModel(
+            author="Иванов И.М.",
+            title="Наука как искусство",
+            degree="д-р. / канд.",
+            branch="экон.",
+            specialty_code="01.01.01",
+            city="СПб.",
+            year=2020,
+            pages=199,
+        )
+    """
+
+    author: str = Field(..., description="Фамилия и инициалы автора")
+    title: str = Field(..., description="Название диссертации")
+    degree: str = Field(..., description="Ученая степень (д-р. / канд.)")
+    branch: str = Field(..., description="Отрасль наук (сокращённо)")
+    specialty_code: str = Field(..., description="Код специальности")
+    city: str = Field(..., description="Город издательства")
+    year: int = Field(..., gt=0, description="Год издания")
+    pages: int = Field(..., gt=0, description="Количество страниц")    

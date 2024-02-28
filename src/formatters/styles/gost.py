@@ -5,7 +5,7 @@ from string import Template
 
 from pydantic import BaseModel
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
+from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, DissertationModel, AbstractModel
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
 
@@ -102,6 +102,53 @@ class GOSTCollectionArticle(BaseCitationStyle):
             pages=self.data.pages,
         )
 
+class GOSTDissertation(BaseCitationStyle):
+    """
+    Форматирование для диссертаций.
+    """
+    data: DissertationModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$author. $title [$degree] : $degree дис. : $branch, $specialty_code / $city, $year. - $pages с."
+        )
+
+    def substitute(self) -> str:
+        return self.template.substitute(
+            author=self.data.author,
+            title=self.data.title,
+            degree=self.data.degree,
+            branch=self.data.branch,
+            specialty_code=self.data.specialty_code,
+            city=self.data.city,
+            year=self.data.year,
+            pages=self.data.pages,
+        )   
+class GOSTAbstract(BaseCitationStyle):
+    """
+    Форматирование для автореферата.
+    """
+
+    data: AbstractModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$author. $title [$degree] : $branch, $specialty_code / $city, $year. - $pages с."
+        )
+
+    def substitute(self) -> str:
+        return self.template.substitute(
+            author=self.data.author,
+            title=self.data.title,
+            degree=self.data.degree,
+            branch=self.data.branch,
+            specialty_code=self.data.specialty_code,
+            city=self.data.city,
+            year=self.data.year,
+            pages=self.data.pages,
+        )
 
 class GOSTCitationFormatter:
     """
@@ -112,6 +159,8 @@ class GOSTCitationFormatter:
         BookModel.__name__: GOSTBook,
         InternetResourceModel.__name__: GOSTInternetResource,
         ArticlesCollectionModel.__name__: GOSTCollectionArticle,
+        DissertationModel.__name__: GOSTDissertation,
+        AbstractModel.__name__: GOSTAbstract,
     }
 
     def __init__(self, models: list[BaseModel]) -> None:
