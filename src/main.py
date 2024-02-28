@@ -6,6 +6,7 @@ from enum import Enum, unique
 import click
 
 from formatters.styles.gost import GOSTCitationFormatter
+from formatters.styles.apa import APACitationFormatter
 from logger import get_logger
 from readers.reader import SourcesReader
 from renderer import Renderer
@@ -21,7 +22,7 @@ class CitationEnum(Enum):
     """
 
     GOST = "gost"  # ГОСТ Р 7.0.5-2008
-    MLA = "mla"  # Modern Language Association
+    #MLA = "mla"  # Modern Language Association
     APA = "apa"  # American Psychological Association
 
 
@@ -77,9 +78,17 @@ def process_input(
     )
 
     models = SourcesReader(path_input).read()
-    formatted_models = tuple(
-        str(item) for item in GOSTCitationFormatter(models).format()
-    )
+    if citation == CitationEnum.GOST.name:
+        formatted_models = tuple(
+            str(item) for item in GOSTCitationFormatter(models).format()
+        )
+    elif citation == CitationEnum.APA.name:
+        formatted_models = tuple(
+            str(item) for item in APACitationFormatter(models).format()
+        )
+    else:
+        logger.error("Неверно указан стиль цитирования: %s", citation_style)
+        return
 
     logger.info("Генерация выходного файла ...")
     Renderer(formatted_models).render(path_output)
