@@ -5,7 +5,13 @@ from string import Template
 
 from pydantic import BaseModel
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    JournalArticleModel,
+    NewspaperArticleModel
+)
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
 
@@ -103,6 +109,60 @@ class GOSTCollectionArticle(BaseCitationStyle):
         )
 
 
+class GOSTJournalArticle(BaseCitationStyle):
+    """
+    Форматирование для статьи из журнала.
+    """
+
+    data: JournalArticleModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$authors $article_title // $journal_title. $year. № $journal_issue. С. $pages."
+        )
+
+    def substitute(self) -> str:
+
+        logger.info('Форматирование статьи из журнала "%s" ...', self.data.article_title)
+
+        return self.template.substitute(
+            authors=self.data.authors,
+            article_title=self.data.article_title,
+            journal_title=self.data.journal_title,
+            year=self.data.year,
+            journal_issue=self.data.journal_issue,
+            pages=self.data.pages,
+        )
+
+
+class GOSTNewspaperArticle(BaseCitationStyle):
+    """
+    Форматирование для статьи из газеты.
+    """
+
+    data: NewspaperArticleModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$authors $article_title // $newspaper_title. $year. № $article_number. $date."
+        )
+
+    def substitute(self) -> str:
+
+        logger.info('Форматирование статьи из журнала "%s" ...', self.data.article_title)
+
+        return self.template.substitute(
+            authors=self.data.authors,
+            article_title=self.data.article_title,
+            newspaper_title=self.data.newspaper_title,
+            year=self.data.year,
+            date=self.data.date,
+            article_number=self.data.article_number
+        )
+
+
 class GOSTCitationFormatter:
     """
     Базовый класс для итогового форматирования списка источников.
@@ -112,6 +172,8 @@ class GOSTCitationFormatter:
         BookModel.__name__: GOSTBook,
         InternetResourceModel.__name__: GOSTInternetResource,
         ArticlesCollectionModel.__name__: GOSTCollectionArticle,
+        JournalArticleModel.__name__: GOSTJournalArticle,
+        NewspaperArticleModel.__name__: GOSTNewspaperArticle
     }
 
     def __init__(self, models: list[BaseModel]) -> None:
@@ -123,7 +185,8 @@ class GOSTCitationFormatter:
 
         formatted_items = []
         for model in models:
-            formatted_items.append(self.formatters_map.get(type(model).__name__)(model))  # type: ignore
+            if type(model).__name__ in self.formatters_map.keys():
+                formatted_items.append(self.formatters_map.get(type(model).__name__)(model))  # type: ignore
 
         self.formatted_items = formatted_items
 
