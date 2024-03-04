@@ -1,7 +1,6 @@
+﻿"""
+Тестирование функций оформления списка источников по APA.
 """
-Тестирование функций оформления списка источников по ГОСТ Р 7.0.5-2008.
-"""
-
 from formatters.base import BaseCitationFormatter
 from formatters.models import (
     BookModel,
@@ -10,95 +9,95 @@ from formatters.models import (
     DissertationModel,
     AbstractModel,
 )
-from formatters.styles.gost import (
-    GOSTBook,
-    GOSTInternetResource,
-    GOSTCollectionArticle,
-    GOSTDissertation,
-    GOSTAbstract,
+from formatters.styles.apa import (
+    APABookFormatter,
+    APAInternetResourceFormatter,
+    APACollectionArticleFormatter,
+    APADissertationFormatter,
+    APAAbstractFormatter,
 )
 
 
-class TestGOST:
+class TestAPA:
     """
-    Тестирование оформления списка источников согласно ГОСТ Р 7.0.5-2008.
+    Тестирование оформления списка источников согласно стилю APA.
     """
 
     def test_book(self, book_model_fixture: BookModel) -> None:
         """
-        Тестирование форматирования книги.
+        Тестирование форматирования книги в стиле APA.
 
         :param BookModel book_model_fixture: Фикстура модели книги
         :return:
         """
 
-        model = GOSTBook(book_model_fixture)
+        model = APABookFormatter(book_model_fixture)
 
         assert (
             model.formatted
-            == "Иванов И.М., Петров С.Н. Наука как искусство. – 3-е изд. – СПб.: Просвещение, 2020. – 999 с."
+            == "Иванов И. & Петров С. (2020). Наука как искусство. (3-е изд.). СПб.: Просвещение."
         )
 
     def test_internet_resource(
         self, internet_resource_model_fixture: InternetResourceModel
     ) -> None:
         """
-        Тестирование форматирования интернет-ресурса.
+        Тестирование форматирования интернет-ресурса в стиле APA.
 
         :param InternetResourceModel internet_resource_model_fixture: Фикстура модели интернет-ресурса
         :return:
         """
 
-        model = GOSTInternetResource(internet_resource_model_fixture)
+        model = APAInternetResourceFormatter(internet_resource_model_fixture)
 
         assert (
             model.formatted
-            == "Наука как искусство // Ведомости URL: https://www.vedomosti.ru (дата обращения: 01.01.2021)."
+            == "Наука как искусство (б. д.). Ведомости URL: https://www.vedomosti.ru (дата обращения: 01.01.2021)."
         )
 
     def test_articles_collection(
         self, articles_collection_model_fixture: ArticlesCollectionModel
     ) -> None:
         """
-        Тестирование форматирования сборника статей.
+        Тестирование форматирования сборника статей в стиле APA.
 
         :param ArticlesCollectionModel articles_collection_model_fixture: Фикстура модели сборника статей
         :return:
         """
 
-        model = GOSTCollectionArticle(articles_collection_model_fixture)
+        model = APACollectionArticleFormatter(articles_collection_model_fixture)
 
         assert (
             model.formatted
-            == "Иванов И.М., Петров С.Н. Наука как искусство // Сборник научных трудов. – СПб.: АСТ, 2020. – С. 25-30."
+            == "Иванов И. & Петров С. (2020). Наука как искусство. Сборник научных трудов (pp. 25-30). СПб.: АСТ."
         )
 
     def test_dissertation(self, dissertation_fixture: DissertationModel) -> None:
         """
-        Тестирование форматирования диссертации.
+        Тестирование форматирования диссертации в стиле APA.
         :param DissertationModel dissertation_fixture: Фикстура модели диссертации
         :return:
         """
 
-        model = GOSTDissertation(dissertation_fixture)
+        model = APADissertationFormatter(dissertation_fixture)
 
         assert (
             model.formatted
-            == "Иванов И.М.. Наука как искусство [д-р. / канд.] дис. : экон., 01.01.01 / СПб., 2020. - 199 с."
+            == "Иванов И.М.. (2020). Наука как искусство (д-р. / канд.) [Диссертация]. экон., 01.01.01. СПб."
         )
 
     def test_abstract(self, abstract_fixture: AbstractModel) -> None:
         """
-        Тестирование форматирования автореферата.
+        Тестирование форматирования автореферата в стиле APA.
         :param AbstractModel abstract_fixture: Фикстура модели автореферата
         :return:
         """
 
-        model = GOSTAbstract(abstract_fixture)
+        model = APAAbstractFormatter(abstract_fixture)
 
         assert (
             model.formatted
-            == "Иванов И.М.. Наука как искусство [д-р. / канд.] : экон., 01.01.01 / СПб., 2020. - 199 с."
+            == "Иванов И.М.. (2020). Наука как искусство (д-р. / канд.) [Автореферат]. экон., 01.01.01. СПб."
         )
 
     def test_citation_formatter(
@@ -121,17 +120,17 @@ class TestGOST:
         """
 
         models = [
-            GOSTBook(book_model_fixture),
-            GOSTInternetResource(internet_resource_model_fixture),
-            GOSTCollectionArticle(articles_collection_model_fixture),
-            GOSTDissertation(dissertation_fixture),
-            GOSTAbstract(abstract_fixture),
+            APABookFormatter(book_model_fixture),
+            APAInternetResourceFormatter(internet_resource_model_fixture),
+            APACollectionArticleFormatter(articles_collection_model_fixture),
+            APADissertationFormatter(dissertation_fixture),
+            APAAbstractFormatter(abstract_fixture),
         ]
         result = BaseCitationFormatter(models).format()
 
-        # тестирование сортировки списка источников
-        assert result[0] == models[2]
-        assert result[1] == models[0]
+        # Тестирование сортировки списка источников
+        assert result[0] == models[0]
+        assert result[1] == models[2]
         assert result[2] == models[4]
         assert result[3] == models[3]
         assert result[4] == models[1]

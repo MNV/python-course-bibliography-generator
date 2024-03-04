@@ -3,12 +3,19 @@ from string import Template
 
 from pydantic import BaseModel
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, DissertationModel, AbstractModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    DissertationModel,
+    AbstractModel,
+)
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
 
 
 logger = get_logger(__name__)
+
 
 class APABookFormatter(BaseCitationStyle):
     """
@@ -19,9 +26,7 @@ class APABookFormatter(BaseCitationStyle):
 
     @property
     def template(self) -> Template:
-        return Template(
-            "$authors ($year). $title. $edition. $city: $publishing_house."
-        )
+        return Template("$authors ($year). $title. $edition. $city: $publishing_house.")
 
     def substitute(self) -> str:
         """
@@ -47,7 +52,9 @@ class APABookFormatter(BaseCitationStyle):
 
         :return: Отформатированный список авторов.
         """
-        authors = self.data.authors.split(", ")  # Предполагая, что имена авторов разделены запятой
+        authors = self.data.authors.split(
+            ", "
+        )  # Предполагая, что имена авторов разделены запятой
         formatted_authors = []
         for author in authors:
             # Разбиваем полное имя автора на фамилию и инициалы
@@ -55,13 +62,23 @@ class APABookFormatter(BaseCitationStyle):
             # Если есть хотя бы фамилия и одна инициала
             if len(author_parts) >= 2:
                 # Форматируем фамилию, инициалы и точку
-                formatted_author = author_parts[0] + ", " + " ".join([initial[0] + "." for initial in author_parts[1:]])
+                formatted_author = (
+                    author_parts[0]
+                    + " "
+                    + " ".join([initial[0] + "." for initial in author_parts[1:]])
+                )
                 formatted_authors.append(formatted_author)
             else:
                 # В случае, если в имени только одно слово (без инициалов)
                 formatted_authors.append(author)
         # Объединяем отформатированных авторов через запятую и пробел
-        return ", ".join(formatted_authors)
+        if len(formatted_authors) == 1:
+            return formatted_authors[0]
+        if len(formatted_authors) == 2:
+            return formatted_authors[0] + " & " + formatted_authors[1]
+        else:
+            # Если авторов больше двух, добавляем "и др."
+            return formatted_authors[0] + " et al."
 
     def get_edition(self) -> str:
         """
@@ -70,6 +87,7 @@ class APABookFormatter(BaseCitationStyle):
         :return: Информация об издании.
         """
         return f"({self.data.edition} изд.)" if self.data.edition else ""
+
 
 class APAInternetResourceFormatter(BaseCitationStyle):
     """
@@ -91,7 +109,9 @@ class APAInternetResourceFormatter(BaseCitationStyle):
         :return: Отформатированная строка источника.
         """
 
-        logger.info('Форматирование интернет-ресурса "%s" в стиле APA...', self.data.article)
+        logger.info(
+            'Форматирование интернет-ресурса "%s" в стиле APA...', self.data.article
+        )
 
         return self.template.substitute(
             article=self.data.article,
@@ -99,6 +119,7 @@ class APAInternetResourceFormatter(BaseCitationStyle):
             link=self.data.link,
             access_date=self.data.access_date,
         )
+
 
 class APACollectionArticleFormatter(BaseCitationStyle):
     """
@@ -120,7 +141,10 @@ class APACollectionArticleFormatter(BaseCitationStyle):
         :return: Отформатированная строка источника.
         """
 
-        logger.info('Форматирование статьи из сборника "%s" в стиле APA...', self.data.article_title)
+        logger.info(
+            'Форматирование статьи из сборника "%s" в стиле APA...',
+            self.data.article_title,
+        )
 
         return self.template.substitute(
             authors=self.get_authors(),
@@ -138,7 +162,9 @@ class APACollectionArticleFormatter(BaseCitationStyle):
 
         :return: Отформатированный список авторов.
         """
-        authors = self.data.authors.split(", ")  # Предполагая, что имена авторов разделены запятой
+        authors = self.data.authors.split(
+            ", "
+        )  # Предполагая, что имена авторов разделены запятой
         formatted_authors = []
         for author in authors:
             # Разбиваем полное имя автора на фамилию и инициалы
@@ -146,24 +172,36 @@ class APACollectionArticleFormatter(BaseCitationStyle):
             # Если есть хотя бы фамилия и одна инициала
             if len(author_parts) >= 2:
                 # Форматируем фамилию, инициалы и точку
-                formatted_author = author_parts[0] + ", " + " ".join([initial[0] + "." for initial in author_parts[1:]])
+                formatted_author = (
+                    author_parts[0]
+                    + " "
+                    + " ".join([initial[0] + "." for initial in author_parts[1:]])
+                )
                 formatted_authors.append(formatted_author)
             else:
                 # В случае, если в имени только одно слово (без инициалов)
                 formatted_authors.append(author)
         # Объединяем отформатированных авторов через запятую и пробел
-        return ", ".join(formatted_authors)
+        if len(formatted_authors) == 1:
+            return formatted_authors[0]
+        if len(formatted_authors) == 2:
+            return formatted_authors[0] + " & " + formatted_authors[1]
+        else:
+            # Если авторов больше двух, добавляем "и др."
+            return formatted_authors[0] + " et al."
+
 
 class APADissertationFormatter(BaseCitationStyle):
     """
     Форматирование для диссертаций в стиле APA.
     """
+
     data: DissertationModel
 
     @property
     def template(self) -> Template:
         return Template(
-            "$author. ($year). $title ($degree) [Диссертация]. $branch, $specialty_code. $city."
+            "$author. ($year). $title ($degree) [Диссертация]. $branch, $speciality_code. $city"
         )
 
     def substitute(self) -> str:
@@ -173,9 +211,10 @@ class APADissertationFormatter(BaseCitationStyle):
             title=self.data.title,
             degree=self.data.degree,
             branch=self.data.branch,
-            specialty_code=self.data.specialty_code,
+            speciality_code=self.data.speciality_code,
             city=self.data.city,
         )
+
 
 class APAAbstractFormatter(BaseCitationStyle):
     """
@@ -187,7 +226,7 @@ class APAAbstractFormatter(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$author. ($year). $title ($degree) [Автореферат]. $branch, $specialty_code. $city."
+            "$author. ($year). $title ($degree) [Автореферат]. $branch, $speciality_code. $city"
         )
 
     def substitute(self) -> str:
@@ -197,7 +236,7 @@ class APAAbstractFormatter(BaseCitationStyle):
             title=self.data.title,
             degree=self.data.degree,
             branch=self.data.branch,
-            specialty_code=self.data.specialty_code,
+            speciality_code=self.data.speciality_code,
             city=self.data.city,
         )
 
@@ -206,6 +245,7 @@ class APACitationFormatter:
     """
     Базовый класс для итогового форматирования списка источников.
     """
+
     formatters_map = {
         BookModel.__name__: APABookFormatter,
         InternetResourceModel.__name__: APAInternetResourceFormatter,
@@ -235,7 +275,3 @@ class APACitationFormatter:
         """
 
         return sorted(self.formatted_items, key=lambda item: item.formatted)
-
-
-
-

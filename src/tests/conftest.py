@@ -3,7 +3,13 @@
 """
 import pytest
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    DissertationModel,
+    AbstractModel,
+)
 
 
 @pytest.fixture
@@ -57,4 +63,42 @@ def articles_collection_model_fixture() -> ArticlesCollectionModel:
         publishing_house="АСТ",
         year=2020,
         pages="25-30",
+    )
+
+
+@pytest.fixture
+def dissertation_fixture() -> DissertationModel:
+    """
+    Фикстура модели диссертации.
+    :return: DissertationModel
+    """
+
+    return DissertationModel(
+        author="Иванов И.М.",
+        title="Наука как искусство",
+        degree="д-р. / канд.",
+        branch="экон.",
+        speciality_code="01.01.01",
+        city="СПб.",
+        year=2020,
+        pages=199,
+    )
+
+
+@pytest.fixture
+def abstract_fixture() -> AbstractModel:
+    """
+    Фикстура модели автореферата.
+    :return: DissertationModel
+    """
+
+    return AbstractModel(
+        author="Иванов И.М.",
+        title="Наука как искусство",
+        degree="д-р. / канд.",
+        branch="экон.",
+        speciality_code="01.01.01",
+        city="СПб.",
+        year=2020,
+        pages=199,
     )

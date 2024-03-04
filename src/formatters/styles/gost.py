@@ -5,7 +5,13 @@ from string import Template
 
 from pydantic import BaseModel
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, DissertationModel, AbstractModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    DissertationModel,
+    AbstractModel,
+)
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
 
@@ -102,16 +108,18 @@ class GOSTCollectionArticle(BaseCitationStyle):
             pages=self.data.pages,
         )
 
+
 class GOSTDissertation(BaseCitationStyle):
     """
     Форматирование для диссертаций.
     """
+
     data: DissertationModel
 
     @property
     def template(self) -> Template:
         return Template(
-            "$author. $title [$degree] : $degree дис. : $branch, $specialty_code / $city, $year. - $pages с."
+            "$author. $title [$degree] дис. : $branch, $speciality_code / $city, $year. - $pages с."
         )
 
     def substitute(self) -> str:
@@ -120,11 +128,13 @@ class GOSTDissertation(BaseCitationStyle):
             title=self.data.title,
             degree=self.data.degree,
             branch=self.data.branch,
-            specialty_code=self.data.specialty_code,
+            speciality_code=self.data.speciality_code,
             city=self.data.city,
             year=self.data.year,
             pages=self.data.pages,
-        )   
+        )
+
+
 class GOSTAbstract(BaseCitationStyle):
     """
     Форматирование для автореферата.
@@ -135,7 +145,7 @@ class GOSTAbstract(BaseCitationStyle):
     @property
     def template(self) -> Template:
         return Template(
-            "$author. $title [$degree] : $branch, $specialty_code / $city, $year. - $pages с."
+            "$author. $title [$degree] : $branch, $speciality_code / $city, $year. - $pages с."
         )
 
     def substitute(self) -> str:
@@ -144,11 +154,12 @@ class GOSTAbstract(BaseCitationStyle):
             title=self.data.title,
             degree=self.data.degree,
             branch=self.data.branch,
-            specialty_code=self.data.specialty_code,
+            speciality_code=self.data.speciality_code,
             city=self.data.city,
             year=self.data.year,
             pages=self.data.pages,
         )
+
 
 class GOSTCitationFormatter:
     """

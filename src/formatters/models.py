@@ -79,6 +79,7 @@ class ArticlesCollectionModel(BaseModel):
     year: int = Field(..., gt=0)
     pages: str
 
+
 class DissertationModel(BaseModel):
     """
     Модель дисссертации:
@@ -90,20 +91,22 @@ class DissertationModel(BaseModel):
             title="Наука как искусство",
             degree="д-р. / канд.",
             branch="экон.",
-            specialty_code="01.01.01",
+            speciality_code="01.01.01",
             city="СПб.",
             year=2020,
             pages=199,
         )
     """
+
     author: str = Field(..., description="Фамилия и инициалы автора")
     title: str = Field(..., description="Название диссертации")
     degree: str = Field(..., description="Ученая степень (д-р. / канд.)")
     branch: str = Field(..., description="Отрасль наук (сокращённо)")
-    specialty_code: str = Field(..., description="Код специальности")
+    speciality_code: str = Field(..., description="Код специальности")
     city: str = Field(..., description="Город издательства")
     year: int = Field(..., gt=0, description="Год защиты")
     pages: int = Field(..., gt=0, description="Количество страниц")
+
 
 class AbstractModel(BaseModel):
     """
@@ -116,7 +119,7 @@ class AbstractModel(BaseModel):
             title="Наука как искусство",
             degree="д-р. / канд.",
             branch="экон.",
-            specialty_code="01.01.01",
+            speciality_code="01.01.01",
             city="СПб.",
             year=2020,
             pages=199,
@@ -127,7 +130,7 @@ class AbstractModel(BaseModel):
     title: str = Field(..., description="Название диссертации")
     degree: str = Field(..., description="Ученая степень (д-р. / канд.)")
     branch: str = Field(..., description="Отрасль наук (сокращённо)")
-    specialty_code: str = Field(..., description="Код специальности")
+    speciality_code: str = Field(..., description="Код специальности")
     city: str = Field(..., description="Город издательства")
     year: int = Field(..., gt=0, description="Год издания")
-    pages: int = Field(..., gt=0, description="Количество страниц")    
+    pages: int = Field(..., gt=0, description="Количество страниц")
