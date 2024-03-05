@@ -5,7 +5,13 @@ from string import Template
 
 from pydantic import BaseModel
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    DissertationModel,
+    AbstractModel,
+)
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
 
@@ -103,6 +109,64 @@ class GOSTCollectionArticle(BaseCitationStyle):
         )
 
 
+class GOSTDissertation(BaseCitationStyle):
+    """
+    Форматирование для диссертаций.
+    """
+
+    data: DissertationModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$author. $title [$degree] дис. : $branch, $speciality_code / $city, $year. - $pages с."
+        )
+
+    def substitute(self) -> str:
+
+        logger.info('Форматирование диссертаций "%s" ...', self.data.title)
+
+        return self.template.substitute(
+            author=self.data.author,
+            title=self.data.title,
+            degree=self.data.degree,
+            branch=self.data.branch,
+            speciality_code=self.data.speciality_code,
+            city=self.data.city,
+            year=self.data.year,
+            pages=self.data.pages,
+        )
+
+
+class GOSTAbstract(BaseCitationStyle):
+    """
+    Форматирование для автореферата.
+    """
+
+    data: AbstractModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$author. $title [$degree] : $branch, $speciality_code / $city, $year. - $pages с."
+        )
+
+    def substitute(self) -> str:
+
+        logger.info('Форматирование автореферата "%s" ...', self.data.title)
+
+        return self.template.substitute(
+            author=self.data.author,
+            title=self.data.title,
+            degree=self.data.degree,
+            branch=self.data.branch,
+            speciality_code=self.data.speciality_code,
+            city=self.data.city,
+            year=self.data.year,
+            pages=self.data.pages,
+        )
+
+
 class GOSTCitationFormatter:
     """
     Базовый класс для итогового форматирования списка источников.
@@ -112,6 +176,8 @@ class GOSTCitationFormatter:
         BookModel.__name__: GOSTBook,
         InternetResourceModel.__name__: GOSTInternetResource,
         ArticlesCollectionModel.__name__: GOSTCollectionArticle,
+        DissertationModel.__name__: GOSTDissertation,
+        AbstractModel.__name__: GOSTAbstract,
     }
 
     def __init__(self, models: list[BaseModel]) -> None:
