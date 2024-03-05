@@ -205,6 +205,9 @@ class APADissertationFormatter(BaseCitationStyle):
         )
 
     def substitute(self) -> str:
+
+        logger.info('Форматирование диссертации "%s" ...', self.data.title)
+
         return self.template.substitute(
             author=self.data.author,
             year=self.data.year,
@@ -230,6 +233,9 @@ class APAAbstractFormatter(BaseCitationStyle):
         )
 
     def substitute(self) -> str:
+
+        logger.info('Форматирование автореферата "%s" ...', self.data.title)
+
         return self.template.substitute(
             author=self.data.author,
             year=self.data.year,

@@ -123,6 +123,9 @@ class GOSTDissertation(BaseCitationStyle):
         )
 
     def substitute(self) -> str:
+
+        logger.info('Форматирование диссертаций "%s" ...', self.data.title)
+
         return self.template.substitute(
             author=self.data.author,
             title=self.data.title,
@@ -149,6 +152,9 @@ class GOSTAbstract(BaseCitationStyle):
         )
 
     def substitute(self) -> str:
+
+        logger.info('Форматирование автореферата "%s" ...', self.data.title)
+
         return self.template.substitute(
             author=self.data.author,
             title=self.data.title,
