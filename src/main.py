@@ -22,7 +22,6 @@ class CitationEnum(Enum):
     """
 
     GOST = "gost"  # ГОСТ Р 7.0.5-2008
-    MLA = "mla"  # Modern Language Association
     APA = "apa"  # American Psychological Association
 
 
@@ -86,7 +85,7 @@ def process_input(
 
     if citation in formatter_styles:
         formatted_models = tuple(
-            str(item) for item in formatter_styles[citation](models).format()
+            str(item) for item in formatter_styles[citation](models).format()  # type: ignore
         )
 
         logger.info("Генерация выходного файла ...")
