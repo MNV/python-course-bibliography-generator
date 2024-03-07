@@ -16,7 +16,7 @@ from formatters.styles.apa import (
 )
 
 
-class TestGOST:
+class TestAPA:
     """
     Тестирование оформления списка источников согласно ГОСТ Р 7.0.5-2008.
     """
