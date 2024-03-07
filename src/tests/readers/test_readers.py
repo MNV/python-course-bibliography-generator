@@ -5,12 +5,20 @@ from typing import Any
 
 import pytest
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    JournalArticleModel,
+    NewspaperArticleModel,
+)
 from readers.reader import (
     BookReader,
     SourcesReader,
     InternetResourceReader,
     ArticlesCollectionReader,
+    JournalArticleReader,
+    NewspaperArticleReader,
 )
 from settings import TEMPLATE_FILE_PATH
 
@@ -104,6 +112,56 @@ class TestReaders:
         # проверка общего количества атрибутов
         assert len(model_type.schema().get("properties", {}).keys()) == 7
 
+    def test_journal_article(self, workbook: Any) -> None:
+        """
+        Тестирование чтения статьи из журнала.
+
+        :param workbook: Объект тестовой рабочей книги.
+        """
+
+        models = JournalArticleReader(workbook).read()
+
+        assert len(models) == 1
+        model = models[0]
+
+        model_type = JournalArticleModel
+
+        assert isinstance(model, model_type)
+        assert model.authors == "Иванов И.М., Петров С.Н."
+        assert model.article_title == "Наука как искусство"
+        assert model.journal_title == "Образование и наука"
+        assert model.year == 2020
+        assert model.journal_issue == 10
+        assert model.pages == "25-30"
+
+        # проверка общего количества атрибутов
+        assert len(model_type.schema().get("properties", {}).keys()) == 6
+
+    def test_newspaper_article(self, workbook: Any) -> None:
+        """
+        Тестирование чтения статьи из газеты.
+
+        :param workbook: Объект тестовой рабочей книги.
+        """
+
+        models = NewspaperArticleReader(workbook).read()
+
+        assert len(models) == 1
+        model = models[0]
+
+        model_type = NewspaperArticleModel
+
+        assert isinstance(model, model_type)
+        assert model.authors == "Иванов И.М., Петров С.Н."
+        assert model.article_title == "Наука как искусство"
+        assert model.newspaper_title == "Южный Урал"
+        assert model.year == 1980
+        assert model.date == "01.10"
+        assert model.article_number == 5
+
+        # проверка общего количества атрибутов
+        assert len(model_type.schema().get("properties", {}).keys()) == 6
+
     def test_sources_reader(self) -> None:
         """
         Тестирование функции чтения всех моделей из источника.
@@ -111,7 +169,7 @@ class TestReaders:
 
         models = SourcesReader(TEMPLATE_FILE_PATH).read()
         # проверка общего считанного количества моделей
-        assert len(models) == 8
+        assert len(models) == 10
 
         # проверка наличия всех ожидаемых типов моделей среди типов считанных моделей
         model_types = {model.__class__.__name__ for model in models}
@@ -119,4 +177,6 @@ class TestReaders:
             BookModel.__name__,
             InternetResourceModel.__name__,
             ArticlesCollectionModel.__name__,
+            JournalArticleModel.__name__,
+            NewspaperArticleModel.__name__,
         }
