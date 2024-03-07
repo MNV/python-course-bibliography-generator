@@ -8,7 +8,7 @@ from formatters.models import (
     InternetResourceModel,
     ArticlesCollectionModel,
     JournalArticleModel,
-    NewspaperArticleModel
+    NewspaperArticleModel,
 )
 
 

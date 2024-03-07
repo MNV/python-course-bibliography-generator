@@ -8,14 +8,14 @@ from formatters.models import (
     InternetResourceModel,
     ArticlesCollectionModel,
     JournalArticleModel,
-    NewspaperArticleModel
+    NewspaperArticleModel,
 )
 from formatters.styles.gost import (
     GOSTBook,
     GOSTInternetResource,
     GOSTCollectionArticle,
     GOSTJournalArticle,
-    GOSTNewspaperArticle
+    GOSTNewspaperArticle,
 )
 
 
@@ -113,7 +113,7 @@ class TestGOST:
         internet_resource_model_fixture: InternetResourceModel,
         articles_collection_model_fixture: ArticlesCollectionModel,
         journal_article_model_fixture: JournalArticleModel,
-        newspaper_article_model_fixture: NewspaperArticleModel
+        newspaper_article_model_fixture: NewspaperArticleModel,
     ) -> None:
         """
         Тестирование функции итогового форматирования списка источников.
@@ -131,7 +131,7 @@ class TestGOST:
             GOSTInternetResource(internet_resource_model_fixture),
             GOSTCollectionArticle(articles_collection_model_fixture),
             GOSTJournalArticle(journal_article_model_fixture),
-            GOSTNewspaperArticle(newspaper_article_model_fixture)
+            GOSTNewspaperArticle(newspaper_article_model_fixture),
         ]
         result = BaseCitationFormatter(models).format()
 

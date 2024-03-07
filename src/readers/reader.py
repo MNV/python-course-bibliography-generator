@@ -12,7 +12,7 @@ from formatters.models import (
     InternetResourceModel,
     ArticlesCollectionModel,
     JournalArticleModel,
-    NewspaperArticleModel
+    NewspaperArticleModel,
 )
 from logger import get_logger
 from readers.base import BaseReader
@@ -117,7 +117,7 @@ class JournalArticleReader(BaseReader):
             "journal_title": {2: str},
             "year": {3: int},
             "journal_issue": {4: int},
-            "pages": {5: str}
+            "pages": {5: str},
         }
 
 
@@ -142,7 +142,7 @@ class NewspaperArticleReader(BaseReader):
             "newspaper_title": {2: str},
             "year": {3: int},
             "date": {4: str},
-            "article_number": {5: int}
+            "article_number": {5: int},
         }
 
 
@@ -157,7 +157,7 @@ class SourcesReader:
         InternetResourceReader,
         ArticlesCollectionReader,
         JournalArticleReader,
-        NewspaperArticleReader
+        NewspaperArticleReader,
     ]
 
     def __init__(self, path: str) -> None:

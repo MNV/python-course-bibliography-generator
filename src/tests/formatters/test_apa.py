@@ -3,17 +3,8 @@
 """
 
 from formatters.base import BaseCitationFormatter
-from formatters.models import (
-    BookModel,
-    InternetResourceModel,
-    ArticlesCollectionModel,
-    JournalArticleModel,
-    NewspaperArticleModel
-)
-from formatters.styles.apa import (
-    APABook,
-    APAInternetResource
-)
+from formatters.models import BookModel, InternetResourceModel
+from formatters.styles.apa import APABook, APAInternetResource
 
 
 class TestAPA:
@@ -57,9 +48,6 @@ class TestAPA:
         self,
         book_model_fixture: BookModel,
         internet_resource_model_fixture: InternetResourceModel,
-        articles_collection_model_fixture: ArticlesCollectionModel,
-        journal_article_model_fixture: JournalArticleModel,
-        newspaper_article_model_fixture: NewspaperArticleModel
     ) -> None:
         """
         Тестирование функции итогового форматирования списка источников.
@@ -74,7 +62,7 @@ class TestAPA:
 
         models = [
             APABook(book_model_fixture),
-            APAInternetResource(internet_resource_model_fixture)
+            APAInternetResource(internet_resource_model_fixture),
         ]
         result = BaseCitationFormatter(models).format()
 

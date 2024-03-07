@@ -22,9 +22,7 @@ class APABook(BaseCitationStyle):
 
     @property
     def template(self) -> Template:
-        return Template(
-            "$authors ($year). $title$edition. $publishing_house"
-        )
+        return Template("$authors ($year). $title$edition. $publishing_house")
 
     def substitute(self) -> str:
 
@@ -59,9 +57,7 @@ class APAInternetResource(BaseCitationStyle):
 
     @property
     def template(self) -> Template:
-        return Template(
-            "$website ($access_date) $article $link"
-        )
+        return Template("$website ($access_date) $article $link")
 
     def substitute(self) -> str:
 
@@ -94,7 +90,7 @@ class APACitationFormatter:
 
         formatted_items = []
         for model in models:
-            if type(model).__name__ in self.formatters_map.keys():
+            if type(model).__name__ in self.formatters_map:
                 formatted_items.append(self.formatters_map.get(type(model).__name__)(model))  # type: ignore
 
         self.formatted_items = formatted_items

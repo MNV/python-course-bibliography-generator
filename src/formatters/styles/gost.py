@@ -10,7 +10,7 @@ from formatters.models import (
     InternetResourceModel,
     ArticlesCollectionModel,
     JournalArticleModel,
-    NewspaperArticleModel
+    NewspaperArticleModel,
 )
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
@@ -124,7 +124,9 @@ class GOSTJournalArticle(BaseCitationStyle):
 
     def substitute(self) -> str:
 
-        logger.info('Форматирование статьи из журнала "%s" ...', self.data.article_title)
+        logger.info(
+            'Форматирование статьи из журнала "%s" ...', self.data.article_title
+        )
 
         return self.template.substitute(
             authors=self.data.authors,
@@ -151,7 +153,9 @@ class GOSTNewspaperArticle(BaseCitationStyle):
 
     def substitute(self) -> str:
 
-        logger.info('Форматирование статьи из журнала "%s" ...', self.data.article_title)
+        logger.info(
+            'Форматирование статьи из журнала "%s" ...', self.data.article_title
+        )
 
         return self.template.substitute(
             authors=self.data.authors,
@@ -159,7 +163,7 @@ class GOSTNewspaperArticle(BaseCitationStyle):
             newspaper_title=self.data.newspaper_title,
             year=self.data.year,
             date=self.data.date,
-            article_number=self.data.article_number
+            article_number=self.data.article_number,
         )
 
 
@@ -173,7 +177,7 @@ class GOSTCitationFormatter:
         InternetResourceModel.__name__: GOSTInternetResource,
         ArticlesCollectionModel.__name__: GOSTCollectionArticle,
         JournalArticleModel.__name__: GOSTJournalArticle,
-        NewspaperArticleModel.__name__: GOSTNewspaperArticle
+        NewspaperArticleModel.__name__: GOSTNewspaperArticle,
     }
 
     def __init__(self, models: list[BaseModel]) -> None:
@@ -185,7 +189,7 @@ class GOSTCitationFormatter:
 
         formatted_items = []
         for model in models:
-            if type(model).__name__ in self.formatters_map.keys():
+            if type(model).__name__ in self.formatters_map:
                 formatted_items.append(self.formatters_map.get(type(model).__name__)(model))  # type: ignore
 
         self.formatted_items = formatted_items

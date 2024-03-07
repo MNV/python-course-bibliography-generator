@@ -5,8 +5,8 @@ from enum import Enum, unique
 
 import click
 
-from formatters.styles.gost import GOSTCitationFormatter
 from formatters.styles.apa import APACitationFormatter
+from formatters.styles.gost import GOSTCitationFormatter
 from logger import get_logger
 from readers.reader import SourcesReader
 from renderer import Renderer
@@ -81,11 +81,10 @@ def process_input(
 
     formatter_styles = {
         CitationEnum.GOST.name: GOSTCitationFormatter,
-        CitationEnum.APA.name: APACitationFormatter
+        CitationEnum.APA.name: APACitationFormatter,
     }
-    print(citation)
-    print(formatter_styles.keys())
-    if citation in formatter_styles.keys():
+
+    if citation in formatter_styles:
         formatted_models = tuple(
             str(item) for item in formatter_styles[citation](models).format()
         )

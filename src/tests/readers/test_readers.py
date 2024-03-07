@@ -10,7 +10,7 @@ from formatters.models import (
     InternetResourceModel,
     ArticlesCollectionModel,
     JournalArticleModel,
-    NewspaperArticleModel
+    NewspaperArticleModel,
 )
 from readers.reader import (
     BookReader,
@@ -18,7 +18,7 @@ from readers.reader import (
     InternetResourceReader,
     ArticlesCollectionReader,
     JournalArticleReader,
-    NewspaperArticleReader
+    NewspaperArticleReader,
 )
 from settings import TEMPLATE_FILE_PATH
 
@@ -178,5 +178,5 @@ class TestReaders:
             InternetResourceModel.__name__,
             ArticlesCollectionModel.__name__,
             JournalArticleModel.__name__,
-            NewspaperArticleModel.__name__
+            NewspaperArticleModel.__name__,
         }
