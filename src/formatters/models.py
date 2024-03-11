@@ -78,3 +78,57 @@ class ArticlesCollectionModel(BaseModel):
     publishing_house: str
     year: int = Field(..., gt=0)
     pages: str
+
+
+class JournalArticleModel(BaseModel):
+
+    """
+    Модель статьи из журнала:
+
+    .. code-block::
+
+        JournalArticleModel(
+            authors="Иванов И.М., Петров С.Н.",
+            article_title="Охрана и рациональное использование болот",
+            journal_title="Проблемы региональной экологии",
+            year=2020,
+            volume_number=1,
+            pages="25-30",
+        )
+    """
+
+    authors: str
+    article_title: str
+    journal_title: str
+    year: int = Field(..., gt=0)
+    volume_number: int = Field(..., gt=0)
+    pages: str
+
+
+class DissertationModel(BaseModel):
+
+    """
+    Модель диссертации:
+
+    .. code-block::
+
+        ArticlesCollectionModel(
+            author="Иванов И.М.",
+            dissertation_title="Наука как искусство",
+            academic_position="канд.",
+            subject="экон.",
+            subject_code="01.01.01",
+            city="СПб.",
+            year=2020,
+            pages="25",
+        )
+    """
+
+    author: str
+    dissertation_title: str
+    academic_position: str
+    subject: str
+    subject_code: str
+    city: str
+    year: int = Field(..., gt=0)
+    pages: str
