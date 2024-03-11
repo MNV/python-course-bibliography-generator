@@ -6,7 +6,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from docx import Document
-from docx.enum.text import WD_ALIGN_PARAGRAPH  # pylint: disable=E0611
+from docx.enum.text import WD_PARAGRAPH_ALIGNMENT  # pylint: disable=E0611
 from docx.shared import Pt
 
 
@@ -29,7 +29,7 @@ class Renderer:
 
         # стилизация заголовка
         paragraph = document.add_paragraph()
-        paragraph.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        paragraph.paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
         runner = paragraph.add_run("Список использованной литературы")
         runner.bold = True
 
@@ -38,7 +38,7 @@ class Renderer:
         style_normal.font.name = "Times New Roman"
         style_normal.font.size = Pt(12)
         style_normal.paragraph_format.line_spacing = 1.5
-        style_normal.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+        style_normal.paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
 
         for row in self.rows:
             # добавление источника
