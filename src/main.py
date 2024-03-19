@@ -5,8 +5,11 @@ from enum import Enum, unique
 
 import click
 
+from apa_renderer import APARenderer
+from formatters.styles.apa import APACitationFormatter
 from formatters.styles.gost import GOSTCitationFormatter
 from logger import get_logger
+from readers.apa_reader import APASourcesReader
 from readers.reader import SourcesReader
 from renderer import Renderer
 from settings import INPUT_FILE_PATH, OUTPUT_FILE_PATH
@@ -54,7 +57,7 @@ class CitationEnum(Enum):
     help="Путь к выходному файлу",
 )
 def process_input(
-    citation: str = CitationEnum.GOST.name,
+    citation: str = CitationEnum.APA.name,
     path_input: str = INPUT_FILE_PATH,
     path_output: str = OUTPUT_FILE_PATH,
 ) -> None:
@@ -76,15 +79,26 @@ def process_input(
         path_output,
     )
 
-    models = SourcesReader(path_input).read()
-    formatted_models = tuple(
-        str(item) for item in GOSTCitationFormatter(models).format()
-    )
+    if citation is CitationEnum.APA.name:
+        models = APASourcesReader(path_input).read()
+        formatted_models = tuple(
+            str(item) for item in APACitationFormatter(models).format()
+        )
 
-    logger.info("Генерация выходного файла ...")
-    Renderer(formatted_models).render(path_output)
+        logger.info("Генерация выходного файла ...")
+        APARenderer(formatted_models).render(path_output)
 
-    logger.info("Команда успешно завершена.")
+        logger.info("Команда успешно завершена.")
+    else:
+        models = SourcesReader(path_input).read()
+        formatted_models = tuple(
+            str(item) for item in GOSTCitationFormatter(models).format()
+        )
+
+        logger.info("Генерация выходного файла ...")
+        Renderer(formatted_models).render(path_output)
+
+        logger.info("Команда успешно завершена.")
 
 
 if __name__ == "__main__":

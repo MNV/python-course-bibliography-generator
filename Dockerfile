@@ -6,7 +6,8 @@ ENV ENV=${ENV} \
   PYTHONUNBUFFERED=1 \
   PYTHONPATH=/src/ \
   # Disable pip cache to make docker image smaller
-  PIP_NO_CACHE_DIR=1 \
+  PIP_NO_CACHE_DIR=false \
+  PIP_CACHE_DIR=/root/.cache/pip \
   # Disable pip version check
   PIP_DISABLE_PIP_VERSION_CHECK=1
 
@@ -18,8 +19,7 @@ RUN apt-get update && apt-get install -y \
 
 COPY ./requirements.txt ./setup.cfg ./black.toml ./.pylintrc /
 
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --upgrade pip -r /requirements.txt
+RUN pip install --upgrade pip -r /requirements.txt
 
 ADD ./src /src
 ADD ./docs /docs
