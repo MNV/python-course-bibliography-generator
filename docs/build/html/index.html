@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en, ru" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Оформление библиографического списка &mdash; Оформление библиографического списка  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Оформление библиографического списка
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Оформление библиографического списка</a><ul>
+<li><a class="reference internal" href="#id2">Установка</a></li>
+<li><a class="reference internal" href="#id3">Использование</a></li>
+<li><a class="reference internal" href="#id4">Автоматизация</a></li>
+<li><a class="reference internal" href="#id5">Тестирование</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">Документация к исходному коду</a><ul>
+<li><a class="reference internal" href="#module-main">Запуск приложения</a></li>
+<li><a class="reference internal" href="#module-readers.reader">Чтение входного файла</a></li>
+<li><a class="reference internal" href="#module-renderer">Генерация выходного файла</a></li>
+<li><a class="reference internal" href="#module-formatters.models">Модели объектов</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Оформление библиографического списка</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Оформление библиографического списка</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Оформление библиографического списка<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
+<p>Консольное приложение для создания библиографического списка.
+Приложение позволяет автоматизировать процесс формирования библиографического списка по заданному стандарту цитирования.</p>
+<dl class="simple">
+<dt>Поддерживаемые стили цитирования:</dt><dd><ul class="simple">
+<li><p>ГОСТ Р 7.0.5-2008</p></li>
+<li><p>American Psychological Association (APA)</p></li>
+</ul>
+</dd>
+</dl>
+<section id="id2">
+<h2>Установка<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<p>Установите требуемое ПО:</p>
+<ol class="arabic simple">
+<li><p>Docker для контейнеризации – <a href="https://www.docker.com" target="_blank">Docker Desktop</a></p></li>
+</ol>
+<ol class="arabic simple" start="2">
+<li><p>Для работы с системой контроля версий – <a href="https://github.com/git-guides/install-git" target="_blank">Git</a></p></li>
+</ol>
+<ol class="arabic simple" start="3">
+<li><p>IDE для работы с исходным кодом – <a href="https://www.jetbrains.com/ru-ru/pycharm/download" target="_blank">PyCharm</a></p></li>
+</ol>
+<p>Клонируйте репозиторий проекта в свою рабочую директорию:</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">git clone https://github.com/mnv/python-course-bibliography-generator.git</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="id3">
+<h2>Использование<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<p>Перед началом использования приложения необходимо его сконфигурировать.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Для конфигурации выполните команды, описанные ниже, находясь в корневой директории проекта (на уровне с директорией <cite>src</cite>).</p>
+</div>
+<ol class="arabic">
+<li><dl>
+<dt>Скопируйте исходный Excel-файл шаблона (<cite>template.xlsx</cite>), создав новый файл (<cite>input.xlsx</cite>):</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cp media/template.xlsx media/input.xlsx</span>
+</pre></div>
+</div>
+<p>Файл <cite>input.xlsx</cite> будет подаваться на вход программе. Заполните его информацией о списке источников.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Скопируйте файл настроек <cite>.env.sample</cite>, создав файл <cite>.env</cite>:</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cp .env.sample .env</span>
+</pre></div>
+</div>
+<p>Этот файл содержит преднастроенные переменные окружения, значения которых будут общими для всего приложения.
+Файл примера (<cite>.env.sample</cite>) содержит набор переменных со значениями по умолчанию.
+Созданный файл <cite>.env</cite> можно настроить в зависимости от окружения.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Никогда не добавляйте в систему контроля версий заполненный файл <cite>.env</cite> для предотвращения компрометации информации о конфигурации приложения.</p>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Соберите Docker-контейнер с помощью Docker Compose:</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker compose build</span>
+</pre></div>
+</div>
+<p>Данную команду необходимо выполнять повторно в случае обновления зависимостей в файле <cite>requirements.txt</cite>.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Чтобы просмотреть документацию по использованию консольного приложения, выполните:</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker compose run app python main.py --help</span>
+</pre></div>
+</div>
+<p>Данная команда выведет на экран список доступных аргументов и их значения по умолчанию.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Для запуска приложения выполните:</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker compose run app python main.py</span>
+</pre></div>
+</div>
+<p>Запустится программа. Она считает исходный файл <cite>media/input.xlsx</cite>, выполнит обработку данных и сгенерирует выходной файл – <cite>media/output.docx</cite>.
+Откройте этот файл и проверьте результат работы приложения.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<dl>
+<dt>Для настройки параметров запуска следует передать консольной команде аргументы в соответствии с её документацией:</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker compose run app python main.py --citation gost --path_input /media/input.xlsx --path_output /media/output.xlsx</span>
+</pre></div>
+</div>
+<p>Таким образом можно определять стиль цитирования и пути ко входному и выходному файлам.</p>
+</dd>
+</dl>
+</div>
+</dd>
+</dl>
+</li>
+</ol>
+</section>
+<section id="id4">
+<h2>Автоматизация<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<p>Проект содержит специальный файл (<cite>Makefile</cite>) для автоматизации выполнения команд:</p>
+<ol class="arabic simple">
+<li><p>Сборка Docker-контейнера.</p></li>
+<li><p>Генерация документации.</p></li>
+<li><p>Запуск форматирования кода.</p></li>
+<li><p>Запуск статического анализа кода (выявление ошибок типов и форматирования кода).</p></li>
+<li><p>Запуск автоматических тестов.</p></li>
+<li><p>Запуск всех функций поддержки качества кода (форматирование, линтеры, автотесты).</p></li>
+</ol>
+<p>Инструкция по запуску этих команд находится в файле <cite>README.md</cite>.</p>
+</section>
+<section id="id5">
+<h2>Тестирование<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<p>Для запуска автоматических тестов выполните команду:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker compose run app pytest --cov=/src --cov-report html:htmlcov --cov-report term --cov-config=/src/tests/.coveragerc -vv</span>
+</pre></div>
+</div>
+<p>Также существует аналогичная <cite>make</cite>-команда:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">make test</span>
+</pre></div>
+</div>
+<p>Отчет о тестировании находится в файле <cite>src/htmlcov/index.html</cite>.</p>
+</section>
+</section>
+<section id="id6">
+<h1>Документация к исходному коду<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<section id="module-main">
+<span id="id7"></span><h2>Запуск приложения<a class="headerlink" href="#module-main" title="Permalink to this heading"></a></h2>
+<p>Запуск приложения.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="main.CitationEnum">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">CitationEnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.CitationEnum" title="Permalink to this definition"></a></dt>
+<dd><p>Поддерживаемые типы цитирования.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.process_input">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">process_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#main.process_input" title="Permalink to this definition"></a></dt>
+<dd><p>Генерация файла Word с оформленным библиографическим списком.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>citation</strong> (<em>str</em>) -- Стиль цитирования</p></li>
+<li><p><strong>path_input</strong> (<em>str</em>) -- Путь к входному файлу</p></li>
+<li><p><strong>path_output</strong> (<em>str</em>) -- Путь к выходному файлу</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-readers.reader">
+<span id="id8"></span><h2>Чтение входного файла<a class="headerlink" href="#module-readers.reader" title="Permalink to this heading"></a></h2>
+<p>Чтение исходного файла.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="readers.reader.ArticlesCollectionReader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">readers.reader.</span></span><span class="sig-name descname"><span class="pre">ArticlesCollectionReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workbook</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Workbook</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#readers.reader.ArticlesCollectionReader" title="Permalink to this definition"></a></dt>
+<dd><p>Чтение модели сборника статей.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="readers.reader.ArticlesCollectionReader.attributes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#readers.reader.ArticlesCollectionReader.attributes" title="Permalink to this definition"></a></dt>
+<dd><p>Получение списка наименований атрибутов с информацией об индексе столбца и типе данных.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;authors&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;edition&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">3</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;publishing_house&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">4</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="nb">int</span><span class="p">},</span>
+    <span class="s2">&quot;pages&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">6</span><span class="p">:</span> <span class="nb">int</span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Атрибуты с информацией об индексе столбца и типе данных</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="readers.reader.ArticlesCollectionReader.model">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#formatters.models.ArticlesCollectionModel" title="formatters.models.ArticlesCollectionModel"><span class="pre">ArticlesCollectionModel</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#readers.reader.ArticlesCollectionReader.model" title="Permalink to this definition"></a></dt>
+<dd><p>Получение модели объекта (строки).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Модель объекта (строки).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="readers.reader.ArticlesCollectionReader.sheet">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sheet</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#readers.reader.ArticlesCollectionReader.sheet" title="Permalink to this definition"></a></dt>
+<dd><p>Получение наименования листа рабочей книги.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Наименование листа рабочей книги.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="readers.reader.BookReader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">readers.reader.</span></span><span class="sig-name descname"><span class="pre">BookReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workbook</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Workbook</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#readers.reader.BookReader" title="Permalink to this definition"></a></dt>
+<dd><p>Чтение модели книги.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="readers.reader.BookReader.attributes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#readers.reader.BookReader.attributes" title="Permalink to this definition"></a></dt>
+<dd><p>Получение списка наименований атрибутов с информацией об индексе столбца и типе данных.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;authors&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;edition&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">3</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;publishing_house&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">4</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="nb">int</span><span class="p">},</span>
+    <span class="s2">&quot;pages&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">6</span><span class="p">:</span> <span class="nb">int</span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Атрибуты с информацией об индексе столбца и типе данных</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="readers.reader.BookReader.model">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#formatters.models.BookModel" title="formatters.models.BookModel"><span class="pre">BookModel</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#readers.reader.BookReader.model" title="Permalink to this definition"></a></dt>
+<dd><p>Получение модели объекта (строки).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Модель объекта (строки).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="readers.reader.BookReader.sheet">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sheet</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#readers.reader.BookReader.sheet" title="Permalink to this definition"></a></dt>
+<dd><p>Получение наименования листа рабочей книги.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Наименование листа рабочей книги.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="readers.reader.DissertationReader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">readers.reader.</span></span><span class="sig-name descname"><span class="pre">DissertationReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workbook</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Workbook</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#readers.reader.DissertationReader" title="Permalink to this definition"></a></dt>
+<dd><p>Чтение модели диссертации.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="readers.reader.DissertationReader.attributes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#readers.reader.DissertationReader.attributes" title="Permalink to this definition"></a></dt>
+<dd><p>Получение списка наименований атрибутов с информацией об индексе столбца и типе данных.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;authors&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;edition&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">3</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;publishing_house&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">4</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="nb">int</span><span class="p">},</span>
+    <span class="s2">&quot;pages&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">6</span><span class="p">:</span> <span class="nb">int</span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Атрибуты с информацией об индексе столбца и типе данных</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="readers.reader.DissertationReader.model">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#formatters.models.DissertationCollectionModel" title="formatters.models.DissertationCollectionModel"><span class="pre">DissertationCollectionModel</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#readers.reader.DissertationReader.model" title="Permalink to this definition"></a></dt>
+<dd><p>Получение модели объекта (строки).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Модель объекта (строки).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="readers.reader.DissertationReader.sheet">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sheet</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#readers.reader.DissertationReader.sheet" title="Permalink to this definition"></a></dt>
+<dd><p>Получение наименования листа рабочей книги.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Наименование листа рабочей книги.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="readers.reader.InternetResourceReader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">readers.reader.</span></span><span class="sig-name descname"><span class="pre">InternetResourceReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workbook</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Workbook</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#readers.reader.InternetResourceReader" title="Permalink to this definition"></a></dt>
+<dd><p>Чтение модели интернет-ресурса.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="readers.reader.InternetResourceReader.attributes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#readers.reader.InternetResourceReader.attributes" title="Permalink to this definition"></a></dt>
+<dd><p>Получение списка наименований атрибутов с информацией об индексе столбца и типе данных.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;authors&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;edition&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">3</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;publishing_house&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">4</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="nb">int</span><span class="p">},</span>
+    <span class="s2">&quot;pages&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">6</span><span class="p">:</span> <span class="nb">int</span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Атрибуты с информацией об индексе столбца и типе данных</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="readers.reader.InternetResourceReader.model">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#formatters.models.InternetResourceModel" title="formatters.models.InternetResourceModel"><span class="pre">InternetResourceModel</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#readers.reader.InternetResourceReader.model" title="Permalink to this definition"></a></dt>
+<dd><p>Получение модели объекта (строки).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Модель объекта (строки).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="readers.reader.InternetResourceReader.sheet">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sheet</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#readers.reader.InternetResourceReader.sheet" title="Permalink to this definition"></a></dt>
+<dd><p>Получение наименования листа рабочей книги.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Наименование листа рабочей книги.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="readers.reader.NewspaperReader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">readers.reader.</span></span><span class="sig-name descname"><span class="pre">NewspaperReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workbook</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Workbook</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#readers.reader.NewspaperReader" title="Permalink to this definition"></a></dt>
+<dd><p>Чтение модели статьи из газеты.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="readers.reader.NewspaperReader.attributes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#readers.reader.NewspaperReader.attributes" title="Permalink to this definition"></a></dt>
+<dd><p>Получение списка наименований атрибутов с информацией об индексе столбца и типе данных.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;authors&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;edition&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">3</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;publishing_house&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">4</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="nb">int</span><span class="p">},</span>
+    <span class="s2">&quot;pages&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">6</span><span class="p">:</span> <span class="nb">int</span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Атрибуты с информацией об индексе столбца и типе данных</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="readers.reader.NewspaperReader.model">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#formatters.models.NewspaperCollectionModel" title="formatters.models.NewspaperCollectionModel"><span class="pre">NewspaperCollectionModel</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#readers.reader.NewspaperReader.model" title="Permalink to this definition"></a></dt>
+<dd><p>Получение модели объекта (строки).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Модель объекта (строки).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="readers.reader.NewspaperReader.sheet">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sheet</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#readers.reader.NewspaperReader.sheet" title="Permalink to this definition"></a></dt>
+<dd><p>Получение наименования листа рабочей книги.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Наименование листа рабочей книги.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="readers.reader.SourcesReader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">readers.reader.</span></span><span class="sig-name descname"><span class="pre">SourcesReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#readers.reader.SourcesReader" title="Permalink to this definition"></a></dt>
+<dd><p>Чтение из источника данных.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.reader.SourcesReader.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#readers.reader.SourcesReader.read" title="Permalink to this definition"></a></dt>
+<dd><p>Чтение исходного файла.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Список прочитанных моделей (строк).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-renderer">
+<span id="id9"></span><h2>Генерация выходного файла<a class="headerlink" href="#module-renderer" title="Permalink to this heading"></a></h2>
+<p>Функции для генерации выходного файла с оформленным списком использованных источников.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="renderer.Renderer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">renderer.</span></span><span class="sig-name descname"><span class="pre">Renderer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renderer.Renderer" title="Permalink to this definition"></a></dt>
+<dd><p>Создание выходного файла – Word.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="renderer.Renderer.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#renderer.Renderer.render" title="Permalink to this definition"></a></dt>
+<dd><p>Метод генерации Word-файла со списком использованных источников.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Path</em><em> | </em><em>str</em>) -- Путь для сохранения выходного файла.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-formatters.models">
+<span id="id10"></span><h2>Модели объектов<a class="headerlink" href="#module-formatters.models" title="Permalink to this heading"></a></h2>
+<p>Описание схем объектов (DTO).</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="formatters.models.ArticlesCollectionModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">formatters.models.</span></span><span class="sig-name descname"><span class="pre">ArticlesCollectionModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">article_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">city</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publishing_house</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ConstrainedIntValue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#formatters.models.ArticlesCollectionModel" title="Permalink to this definition"></a></dt>
+<dd><p>Модель сборника статей:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ArticlesCollectionModel</span><span class="p">(</span>
+    <span class="n">authors</span><span class="o">=</span><span class="s2">&quot;Иванов И.М., Петров С.Н.&quot;</span><span class="p">,</span>
+    <span class="n">article_title</span><span class="o">=</span><span class="s2">&quot;Наука как искусство&quot;</span><span class="p">,</span>
+    <span class="n">collection_title</span><span class="o">=</span><span class="s2">&quot;Сборник научных трудов&quot;</span><span class="p">,</span>
+    <span class="n">city</span><span class="o">=</span><span class="s2">&quot;СПб.&quot;</span><span class="p">,</span>
+    <span class="n">publishing_house</span><span class="o">=</span><span class="s2">&quot;АСТ&quot;</span><span class="p">,</span>
+    <span class="n">year</span><span class="o">=</span><span class="mi">2020</span><span class="p">,</span>
+    <span class="n">pages</span><span class="o">=</span><span class="s2">&quot;25-30&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="formatters.models.BookModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">formatters.models.</span></span><span class="sig-name descname"><span class="pre">BookModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">city</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publishing_house</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ConstrainedIntValue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ConstrainedIntValue</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#formatters.models.BookModel" title="Permalink to this definition"></a></dt>
+<dd><p>Модель книги:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BookModel</span><span class="p">(</span>
+    <span class="n">authors</span><span class="o">=</span><span class="s2">&quot;Иванов И.М., Петров С.Н.&quot;</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Наука как искусство&quot;</span><span class="p">,</span>
+    <span class="n">edition</span><span class="o">=</span><span class="s2">&quot;3-е&quot;</span><span class="p">,</span>
+    <span class="n">city</span><span class="o">=</span><span class="s2">&quot;СПб.&quot;</span><span class="p">,</span>
+    <span class="n">publishing_house</span><span class="o">=</span><span class="s2">&quot;Просвещение&quot;</span><span class="p">,</span>
+    <span class="n">year</span><span class="o">=</span><span class="mi">2020</span><span class="p">,</span>
+    <span class="n">pages</span><span class="o">=</span><span class="mi">999</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="formatters.models.DissertationCollectionModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">formatters.models.</span></span><span class="sig-name descname"><span class="pre">DissertationCollectionModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">author</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dissertation_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autor_grade</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">science_branch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speciality_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">city</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ConstrainedIntValue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#formatters.models.DissertationCollectionModel" title="Permalink to this definition"></a></dt>
+<dd><p>Модель диссертации:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DissertationCollectionModel</span><span class="p">(</span>
+    <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Иванов И.М.&quot;</span><span class="p">,</span>
+    <span class="n">dissertation_title</span><span class="o">=</span><span class="s2">&quot;Наука как искусство&quot;</span><span class="p">,</span>
+    <span class="n">autor_grade</span><span class="o">=</span><span class="s2">&quot;д-р. / канд.&quot;</span><span class="p">,</span>
+    <span class="n">science_branch</span><span class="o">=</span><span class="s2">&quot;экон.&quot;</span><span class="p">,</span>
+    <span class="n">speciality_code</span><span class="o">=</span><span class="s2">&quot;01.01.01&quot;</span><span class="p">,</span>
+    <span class="n">city</span><span class="o">=</span><span class="s2">&quot;СПб.&quot;</span><span class="p">,</span>
+    <span class="n">year</span><span class="o">=</span><span class="mi">2020</span><span class="p">,</span>
+    <span class="n">pages</span><span class="o">=</span><span class="mi">199</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="formatters.models.InternetResourceModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">formatters.models.</span></span><span class="sig-name descname"><span class="pre">InternetResourceModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">article</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">website</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">link</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">access_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#formatters.models.InternetResourceModel" title="Permalink to this definition"></a></dt>
+<dd><p>Модель интернет ресурса:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">InternetResourceModel</span><span class="p">(</span>
+    <span class="n">article</span><span class="o">=</span><span class="s2">&quot;Наука как искусство&quot;</span><span class="p">,</span>
+    <span class="n">website</span><span class="o">=</span><span class="s2">&quot;Ведомости&quot;</span><span class="p">,</span>
+    <span class="n">link</span><span class="o">=</span><span class="s2">&quot;https://www.vedomosti.ru/&quot;</span><span class="p">,</span>
+    <span class="n">access_date</span><span class="o">=</span><span class="s2">&quot;01.01.2021&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="formatters.models.NewspaperCollectionModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">formatters.models.</span></span><span class="sig-name descname"><span class="pre">NewspaperCollectionModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">article_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newspaper_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ConstrainedIntValue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">article_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#formatters.models.NewspaperCollectionModel" title="Permalink to this definition"></a></dt>
+<dd><p>Модель статьи из газеты:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NewspaperCollectionModel</span><span class="p">(</span>
+    <span class="n">authors</span><span class="o">=</span><span class="s2">&quot;Иванов И.М., Петров С.Н.&quot;</span><span class="p">,</span>
+    <span class="n">article_title</span><span class="o">=</span><span class="s2">&quot;Наука как искусство&quot;</span><span class="p">,</span>
+    <span class="n">newspaper_title</span><span class="o">=</span><span class="s2">&quot;Южный Урал&quot;</span><span class="p">,</span>
+    <span class="n">year</span><span class="o">=</span><span class="mi">1980</span><span class="p">,</span>
+    <span class="n">date</span><span class="o">=</span><span class="s2">&quot;01.10&quot;</span><span class="p">,</span>
+    <span class="n">article_number</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Michael.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

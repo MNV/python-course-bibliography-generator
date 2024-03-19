@@ -7,10 +7,15 @@ from typing import Type
 import openpyxl
 from openpyxl.workbook import Workbook
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    NewspaperCollectionModel,
+    DissertationCollectionModel,
+)
 from logger import get_logger
 from readers.base import BaseReader
-
 
 logger = get_logger(__name__)
 
@@ -90,6 +95,58 @@ class ArticlesCollectionReader(BaseReader):
         }
 
 
+class NewspaperReader(BaseReader):
+    """
+    Чтение модели статьи из газеты.
+    """
+
+    @property
+    def model(self) -> Type[NewspaperCollectionModel]:
+        return NewspaperCollectionModel
+
+    @property
+    def sheet(self) -> str:
+        return "Статья из газеты"
+
+    @property
+    def attributes(self) -> dict:
+        return {
+            "authors": {0: str},
+            "article_title": {1: str},
+            "newspaper_title": {2: str},
+            "year": {3: int},
+            "date": {4: str},
+            "article_number": {5: int},
+        }
+
+
+class DissertationReader(BaseReader):
+    """
+    Чтение модели диссертации.
+    """
+
+    @property
+    def model(self) -> Type[DissertationCollectionModel]:
+        return DissertationCollectionModel
+
+    @property
+    def sheet(self) -> str:
+        return "Диссертация"
+
+    @property
+    def attributes(self) -> dict:
+        return {
+            "author": {0: str},
+            "dissertation_title": {1: str},
+            "autor_grade": {2: str},
+            "science_branch": {3: str},
+            "speciality_code": {4: str},
+            "city": {5: str},
+            "year": {6: int},
+            "pages": {7: int},
+        }
+
+
 class SourcesReader:
     """
     Чтение из источника данных.
@@ -100,6 +157,8 @@ class SourcesReader:
         BookReader,
         InternetResourceReader,
         ArticlesCollectionReader,
+        NewspaperReader,
+        DissertationReader,
     ]
 
     def __init__(self, path: str) -> None:
