@@ -78,3 +78,59 @@ class ArticlesCollectionModel(BaseModel):
     publishing_house: str
     year: int = Field(..., gt=0)
     pages: str
+
+
+class RegulatoryActModel(BaseModel):
+    """
+    Модель нормативного акта:
+    .. code-block::
+        RegulatoryActModel(
+            type="Трудовой кодекс",
+            name="Наука как искусство",
+            agree_date="02.01.2022",
+            act_num="8888-88",
+            publishing_source="Сайт России",
+            year=2022,
+            source=5,
+            article=15,
+            amended_from="01.01.2021",
+        )
+    """
+
+    type: str
+    name: str
+    agree_date: str
+    act_num: str
+    publishing_source: str
+    year: int = Field(..., gt=0)
+    source: int = Field(..., gt=0)
+    article: int = Field(..., gt=0)
+    amended_from: str
+
+
+class DissertationModel(BaseModel):
+    """
+    Модель диссертации:
+    .. code-block::
+        DissertationModel(
+            author_name="Петров С.Н.",
+            title="Наука как искусство",
+            author_title="канд.",
+            special_field="ЭВМ.",
+            special_code="09.01.02",
+            city="СПб.",
+            year=2022,
+            pages=199,
+        )
+    """
+
+    author_name: str = Field(..., min_length=1)
+    title: str = Field(..., min_length=1)
+    author_title: str = Field(..., min_length=1)
+    special_field: str = Field(..., min_length=1)
+    special_code: str = Field(..., min_length=1)
+    city: str = Field(..., min_length=1)
+    year: int = Field(..., gt=0)
+    pages: int = Field(..., gt=0)
+
+
