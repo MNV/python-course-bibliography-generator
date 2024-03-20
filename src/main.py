@@ -10,6 +10,7 @@ from logger import get_logger
 from readers.reader import SourcesReader
 from renderer import Renderer
 from settings import INPUT_FILE_PATH, OUTPUT_FILE_PATH
+from formatters.styles.apa import Formatter_APA
 
 logger = get_logger(__name__)
 
@@ -77,9 +78,16 @@ def process_input(
     )
 
     models = SourcesReader(path_input).read()
-    formatted_models = tuple(
-        str(item) for item in GOSTCitationFormatter(models).format()
-    )
+    formatters = {
+        CitationEnum.GOST.name: GOSTCitationFormatter,
+        CitationEnum.APA.name: Formatter_APA,
+    }
+
+    if citation not in formatters:
+        logger.error("Данный стиль не поддерживается")
+
+    formatter = formatters[citation]
+    formatted_models = tuple(str(item) for item in formatter(models).format())
 
     logger.info("Генерация выходного файла ...")
     Renderer(formatted_models).render(path_output)

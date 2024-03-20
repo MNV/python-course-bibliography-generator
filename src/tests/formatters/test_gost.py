@@ -27,9 +27,7 @@ class TestGOST:
             == "Иванов И.М., Петров С.Н. Наука как искусство. – 3-е изд. – СПб.: Просвещение, 2020. – 999 с."
         )
 
-    def test_internet_resource(
-        self, internet_resource_model_fixture: InternetResourceModel
-    ) -> None:
+    def test_internet_resource(self, internet_resource_model_fixture: InternetResourceModel) -> None:
         """
         Тестирование форматирования интернет-ресурса.
 
